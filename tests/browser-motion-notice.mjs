@@ -15,7 +15,9 @@ for(const width of [320,390,768,1440])for(const style of ['one-line','creative-l
  if(width===390&&style==='creative-lab')await p.screenshot({path:`${out}/windows-reduced-390.png`});
  await notice.locator('button').click();assert.equal(await notice.isVisible(),false);assert.match(await p.evaluate(()=>document.activeElement.className),/web-activate/);
  await p.reload();await p.locator('#website-picker').waitFor();assert.equal(await notice.isVisible(),false);
- await p.emulateMedia({reducedMotion:'no-preference'});await p.waitForFunction(()=>sessionStorage.getItem('devoralabs-motion-notice-dismissed-v1')===null);await p.emulateMedia({reducedMotion:'reduce'});await notice.waitFor();
+ await p.emulateMedia({reducedMotion:'no-preference'});await p.waitForFunction(()=>!matchMedia('(prefers-reduced-motion: reduce)').matches);await p.emulateMedia({reducedMotion:'reduce'});assert.equal(await notice.isVisible(),false);
+ // A fresh notice session still follows live preference changes.
+ await p.evaluate(()=>sessionStorage.removeItem('devoralabs-motion-notice-dismissed-v1'));await p.reload();await notice.waitFor();
  // Media changes must not reload or clear an embedded app.
  const current=p.frames().find(f=>f.url().includes(style==='creative-lab'?'creative.html':'one-line.html'));
  const name=style==='creative-lab'?'[name="name"]':'#client-name';await current.locator(name).fill('Giữ nội dung');
