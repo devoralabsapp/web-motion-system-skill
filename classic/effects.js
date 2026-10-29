@@ -37,7 +37,6 @@ export function initMotion(){
   frame=requestAnimationFrame(step);
  }
  controls.addEventListener('click',e=>{const button=e.target.closest('button');if(!button)return;if(button.hasAttribute('data-scene'))showScene(Number(button.dataset.scene));else story();});
- document.querySelectorAll('.brand-mark').forEach(mark=>{mark.innerHTML='<svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M10 26 26 10M11 10h15v15" stroke="currentColor" stroke-width="2"/></svg>';});
  select('h1').classList.add('kinetic-heading');
  const vietnameseLabels=['LỌC ĐƠN · THEO DÕI · XỬ LÝ','CHỌN HÀNG · THÊM GIỎ · ĐIỀU CHỈNH','YÊU CẦU · PHÊ DUYỆT · THEO DÕI'];
  document.querySelectorAll('.project-shot').forEach((shot,i)=>{const context=document.createElement('span');context.className='preview-context';context.textContent=vietnameseLabels[i];context.setAttribute('aria-hidden','true');shot.append(context);});

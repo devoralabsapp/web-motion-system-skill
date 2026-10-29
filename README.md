@@ -1,14 +1,14 @@
-# Từ quy trình đến sản phẩm — Redline Atelier
+# DevoraLabs — Từ quy trình đến sản phẩm
 
-Portfolio song ngữ Việt/Anh, art direction Redline Atelier. Phiên bản 1.5 có sáu tab riêng, animation phát lại khi cuộn trở về section, cùng một repo và website. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
+Portfolio song ngữ Việt/Anh, art direction Redline Atelier. Phiên bản 1.6 dùng thương hiệu DevoraLabs, logo D + L và sáu tab riêng trên cùng một website. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
 
 Bản gốc 1.1 được giữ trong `classic.html` và `classic/`, đồng thời còn snapshot tag `v1.1-current`. Bản “Một nét, thành hệ thống” ở `one-line.html`. Website chung: https://redline-personal.vercel.app. Đây là cập nhật theo yêu cầu gom và deploy chung sau khi đã bàn giao preview 1.2.
 
 ## Chuyển kiểu
 
-`index.html`, `switcher.css`, `switcher.js` tạo thanh chọn và hai vùng xem. Mặc định từ bản 1.4 là Một nét. `?style=classic` và `?style=one-line` mở đúng kiểu; lựa chọn mới được nhớ bằng khóa `redline-preferred-style-v2` nếu localStorage khả dụng. Khóa phiên bản cũ không áp đặt Bản gốc lên mặc định mới. Có thể dùng Tab, Enter, phím trái/phải, Home/End và browser Back/Forward.
+`index.html`, `switcher.css`, `switcher.js` tạo thanh chọn và sáu vùng xem. Mặc định từ bản 1.4 là Một nét. `?style=classic` và `?style=one-line` mở đúng kiểu; lựa chọn mới được nhớ bằng khóa `redline-preferred-style-v2` nếu localStorage khả dụng. Khóa phiên bản cũ không áp đặt Bản gốc lên mặc định mới. Có thể dùng Tab, Enter, phím trái/phải, Home/End và browser Back/Forward.
 
-Mỗi kiểu chỉ tải khi mở lần đầu, sau đó giữ nguyên trang trong phiên: vị trí cuộn, bộ lọc, dữ liệu demo, form và dialog không reset khi chuyển kiểu. Hai kiểu giữ dữ liệu độc lập để thử/so sánh; reload vẫn trả về dữ liệu demo mẫu như trước. Nội dung, dữ liệu mẫu, font, ảnh và CSS nền dùng chung. Chỉ app/motion của Bản gốc được giữ riêng để bảo toàn choreography.
+Mỗi kiểu chỉ tải khi mở lần đầu, sau đó giữ nguyên trang trong phiên: vị trí cuộn, bộ lọc, dữ liệu demo, form và dialog không reset khi chuyển kiểu. Các kiểu giữ dữ liệu độc lập để thử/so sánh; reload vẫn trả về dữ liệu demo mẫu như trước. Nội dung, dữ liệu mẫu, font, ảnh và CSS nền dùng chung. Chỉ app/motion của Bản gốc được giữ riêng để bảo toàn choreography.
 
 ## Xem website
 
@@ -30,7 +30,7 @@ Thêm email/Zalo chỉ tạo kênh liên hệ trực tiếp. Form vẫn tạo br
 
 ## Chưa có và cần bổ sung
 
-Tên cá nhân, thương hiệu, tiểu sử xác thực, email/Zalo, dự án thật được phép công khai, ảnh cá nhân (nếu muốn dùng), domain và cấu hình nhận brief. Không có số năm, khách hàng, đánh giá, giá, thời hạn hay thành tích tự tạo.
+Tên cá nhân, tiểu sử xác thực, email/Zalo, dự án thật được phép công khai, ảnh cá nhân (nếu muốn dùng), domain và cấu hình nhận brief. Không có số năm, khách hàng, đánh giá, giá, thời hạn hay thành tích tự tạo.
 
 ## Demo
 
@@ -64,3 +64,11 @@ Bốn profile mới dùng chung ứng dụng trong one-line.html?variant=<id>, a
 Đổi ngôn ngữ không tải lại frame, không xóa state demo, form hoặc nội dung người dùng nhập. Brief đang sửa giữ nguyên, tạo lại sẽ dùng ngôn ngữ hiện tại. Currency luôn là VND. Ảnh project tiếng Anh chụp từ chính ứng dụng.
 
 Section rearm sau khi hoàn toàn ra khỏi viewport; input đang focus được bảo vệ. Hero phát lại khi cuộn ngược có chủ đích, dữ liệu vẫn giữ. Đọc LANGUAGES-AND-STYLES.md và video/JSON trong ../redline-delivery/six-styles/. Các phần ghi theo 1.2–1.4 ở trên là lịch sử triển khai.
+
+## DevoraLabs và phát lại khi cuộn (1.6)
+
+Logo D + L có trong đầu trang, chân trang, thanh chọn kiểu và favicon. Bản SVG độc lập: `assets/devoralabs-mark.svg`. Thương hiệu được khai báo ở `content.js`; các title và metadata đã cập nhật cho VI/EN.
+
+Sau khi tương tác, hero mở khóa khi người xem cuộn ngược ít nhất 48px và trở lại phần chuyển cảnh; không cần về đầu trang hoặc cuộn trong một khoảng thời gian giới hạn. Mỗi section tự đối chiếu vị trí trong khung hình khi cuộn và khi quay lại tab. Phát lại chỉ đổi phần trình bày: không render lại demo, không đổi chế độ đang chọn, không đặt lại đơn hàng, giỏ hàng, yêu cầu, bộ lọc hay form. Chế độ giảm chuyển động vẫn được tôn trọng.
+
+Kiểm thử trình duyệt: chạy `npm install`, mở server bằng `npm run dev`, rồi ở terminal khác chạy `npm run test:browser` với Chrome đã cài. Có thể đặt `BROWSER_EXECUTABLE` trỏ tới Chrome hoặc `PLAYWRIGHT_MODULE` trỏ tới Playwright sẵn có. `BASE_URL` mặc định là localhost:4173; đặt URL website để kiểm tra bản live. Bộ kiểm thử dùng sự kiện wheel và PageUp/PageDown thật, kiểm tra đường SVG/transform, animation CSS chạy lại ba lần, trạng thái thao tác, VI/EN, màn hình hẹp và giảm chuyển động. Kết quả và ảnh lưu tại `../redline-delivery/devoralabs/` hoặc `QA_OUTPUT`.

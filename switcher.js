@@ -1,9 +1,9 @@
 import {initI18n,refreshLanguage,getLanguage,setLanguage} from './i18n.js';
 import {translatePhrase} from './i18n-text.js';
 export const styles=[
- {id:'classic',label:'Bản gốc',title:'Portfolio Redline Atelier — Bản gốc',url:'classic.html'},
- {id:'one-line',label:'Một nét, thành hệ thống',title:'Portfolio Redline Atelier — Một nét, thành hệ thống',url:'one-line.html'},
- ...[{id:'kinetic',label:'Chữ động'},{id:'layers',label:'Xếp lớp'},{id:'blueprint',label:'Bản vẽ'},{id:'orbit',label:'Quỹ đạo'}].map(style=>({...style,title:'Portfolio Redline Atelier — '+style.label,url:'one-line.html',variant:style.id}))
+ {id:'classic',label:'Bản gốc',title:'Portfolio DevoraLabs — Bản gốc',url:'classic.html'},
+ {id:'one-line',label:'Một nét, thành hệ thống',title:'Portfolio DevoraLabs — Một nét, thành hệ thống',url:'one-line.html'},
+ ...[{id:'kinetic',label:'Chữ động'},{id:'layers',label:'Xếp lớp'},{id:'blueprint',label:'Bản vẽ'},{id:'orbit',label:'Quỹ đạo'}].map(style=>({...style,title:'Portfolio DevoraLabs — '+style.label,url:'one-line.html',variant:style.id}))
 ];
 initI18n();
 for(const [i,style] of styles.entries()){
