@@ -80,7 +80,7 @@ try{
  await frame.locator('#client-name').fill('QA Devora');await frame.locator('#client-contact').fill('qa@example.test');await frame.locator('#client-problem').fill('Giữ nguyên nội dung đang viết khi cuộn lên xuống.');
  await frame.locator('#brief-form button[type=submit]').click();await frame.locator('#brief-output').fill('Edited locally — giữ nguyên bản này');
  await frame.locator('.site-header .brand').click();await page.waitForTimeout(900);
- await page.locator('[data-style="orbit"]').click();await page.waitForTimeout(250);await page.locator('[data-language="en"]').click();await page.waitForTimeout(250);await page.locator('[data-style="one-line"]').click();await page.waitForTimeout(300);
+ await page.locator('#website-picker').selectOption('orbit');await page.waitForTimeout(250);await page.locator('[data-language="en"]').click();await page.waitForTimeout(250);await page.locator('#website-picker').selectOption('one-line');await page.waitForTimeout(300);
  assert.equal(await frame.locator('#client-name').inputValue(),'QA Devora');assert.equal(await frame.locator('#brief-output').inputValue(),'Edited locally — giữ nguyên bản này');assert.equal((await sample(frame)).mode,'internal');assert.equal(await frame.locator('#request-filter').inputValue(),'all');
  await frame.locator('a[href="#trai-nghiem"]').first().click();await page.waitForTimeout(850);await frame.locator('[data-mode="shop"]').click();assert.equal(await frame.locator('.quantity output').textContent(),'2');
  results.push({test:'cart, approvals, filters, form and edited brief survive replay, locale and style switching',pass:true});
