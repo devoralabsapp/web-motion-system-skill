@@ -1,4 +1,4 @@
 interface:
   display_name: "DevoraLabs Web Motion"
-  short_description: "Recreate all six Web 1 and three Web 2 motion styles"
-  default_prompt: "Use $devoralabs-web-motion to reproduce the motion styles of Web 1 and Web 2 while preserving state, stable replay and reduced-motion support."
+  short_description: "240 GIF motion recipes plus all Web 1/Web 2 styles"
+  default_prompt: "Use $devoralabs-web-motion to select a numbered motion recipe and GIF, or a Web 1/Web 2 direction, and implement it with stable replay, preserved state and reduced-motion support."

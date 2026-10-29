@@ -1,11 +1,23 @@
 ---
 name: devoralabs-web-motion
-description: Reproduce or adapt DevoraLabs Web 1's six portfolio motion styles and Web 2's three Creative Lab styles. Use for scroll-driven SVG-to-live-UI stories, kinetic type, layered or orbital previews, cinematic framing, paper reveals, or debugging their replay and flicker. Preserve existing application state and accessibility preferences.
+description: Implement or adapt 240 numbered motion studies with individual GIF demos and recipes, plus DevoraLabs Web 1's six and Web 2's three motion styles. Use for typography, SVG, scroll, layout, UI, physics, particles, cinematic, product motion, triggers and easing; debug replay, flicker and cache while preserving app state and reduced motion.
 ---
 
 # DevoraLabs Web Motion
 
-Build motion with the same visual language as **both Web 1 and Web 2**, adapted to the host website. This is a motion skill, not authorization to rebuild content, add all nine styles, publish, or change another website in the same project.
+Build selected motion from the **240-item GIF catalog** or the visual language of **Web 1 and Web 2**, adapted to the host. This is not authorization to rebuild content, add every effect, publish, or change another website in the project.
+
+## Choose a catalog effect
+
+Read [the catalog index](references/catalog.md) to select an ID, then only its individual recipe and related reliability guidance. The index routes to 24 group galleries and **240 individual pages, each with its own GIF**. The machine-readable registry is `assets/catalog/catalog.json`.
+
+- IDs **001–220**: visual effects, variants and product patterns; some intentionally overlap.
+- IDs **221–230**: event/input triggers, not standalone visual effects.
+- IDs **231–240**: timing/easing/orchestration modes that compose with a visual property.
+
+Each recipe points to its deterministic branch in `assets/catalog/demo-engine.mjs`; GIFs are under `assets/gifs/`. These are compact teaching studies, not production recordings. Shader/3D examples are explicitly Canvas 2D approximations; synthetic audio/data and simulated input are labeled. Do not present them as real sensors, true 3D rendering, an interactive GIF or benchmark evidence.
+
+Port the selected mechanism into the host's real CSS/SVG/DOM/canvas/WebGL stack. Do not import or autoplay all 240 studies in a production page. Use the existing Web 1/Web 2 references when the user requests a whole motion direction rather than one catalog item.
 
 ## Choose the requested family
 

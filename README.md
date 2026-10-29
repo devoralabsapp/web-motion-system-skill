@@ -1,8 +1,51 @@
 # DevoraLabs Web Motion
 
-Skill để AI agent học và triển khai chuyển động của **cả Web 1 và Web 2**: 6 kiểu portfolio, 3 kiểu Creative Lab, cùng cách giữ dữ liệu, phát lại khi cuộn và tránh nháy lặp.
+Skill để AI agent học và triển khai **240 mục motion có GIF demo riêng**, cùng **6 kiểu Web 1 + 3 kiểu Web 2**, giữ dữ liệu, phát lại khi cuộn và tránh nháy lặp.
 
 Skill chính: [SKILL.md](skills/devoralabs-web-motion/SKILL.md). Tài liệu kỹ thuật viết bằng tiếng Anh để nhiều agent sử dụng; ví dụ và nội dung tiếng Việt được giữ nguyên.
+
+## Danh mục 240 GIF
+
+**[Mở danh mục 240 mục](skills/devoralabs-web-motion/references/catalog.md)** — chọn nhóm để xem 10 GIF cùng lúc, hoặc mở từng recipe. Mỗi mục có ID ổn định, GIF, mô tả tiếng Việt, cách triển khai, thời gian khởi điểm và điều kiện kiểm thử.
+
+| Phạm vi | Nội dung |
+| --- | --- |
+| 001–220 | Hiệu ứng, biến thể và mẫu chuyển động |
+| 221–230 | Cách kích hoạt: load, viewport, scroll, hover, click, focus, drag, state, dữ liệu |
+| 231–240 | Easing, spring, bounce, elastic, stagger, yoyo và timeline |
+
+24 nhóm: nền tảng; xuất hiện; biến mất; chữ; chữ nâng cao; ảnh; mask; SVG; cuộn; layout; chuyển trang; điều khiển; loading/trạng thái; vật lý; con trỏ; chiều sâu; giấy; hạt; shader/biến dạng; điện ảnh; dữ liệu; sản phẩm; trigger; easing.
+
+GIF là nghiên cứu minh họa bằng code, không phải video quay website. Demo 3D/shader là bản mô phỏng nguyên lý bằng Canvas 2D; tín hiệu audio/dữ liệu và thao tác đầu vào được ghi rõ là mô phỏng. Các mục có thể giao nhau và kết hợp, không phải 240 tên chuẩn độc lập.
+
+### Gọi một mục cụ thể
+
+```text
+Dùng $devoralabs-web-motion, mục 073 / Path tracer.
+Đọc recipe và GIF tham khảo, rồi áp dụng vào sơ đồ quy trình của trang này.
+Giữ dữ liệu, focus và reduced motion; không sửa section khác.
+```
+
+### Xem gallery có tìm kiếm trên máy
+
+```sh
+npm run catalog:preview
+```
+
+Mở địa chỉ local được in ra. Gallery cho tìm theo ID/tên/tiếng Việt, lọc nhóm và loại, phát/dừng từng GIF và chép prompt. Ảnh tĩnh hiển thị mặc định để không chạy 240 GIF cùng lúc. GitHub không chạy file HTML này trực tiếp; dùng các trang Markdown để xem GIF ngay trên GitHub.
+
+### Tạo lại GIF và tài liệu
+
+```sh
+npm ci
+npm run catalog:docs
+npm run catalog:gifs
+npm run catalog:verify
+```
+
+Generator dùng Playwright và **FFmpeg có encoder GIF** có sẵn trên máy. Cài browser hoặc chọn `BROWSER_CHANNEL=chrome` khi cần; đặt `FFMPEG_PATH` nếu `ffmpeg` không nằm trong PATH. Không có binary FFmpeg hoặc credential được đưa vào repo.
+
+Thông số mặc định: 400×260px, 36 frame, 12fps, GIF lặp 3 giây. Có PNG tĩnh đi kèm. Để tạo lại một số mục: `node scripts/render-catalog-gifs.mjs --ids=1,73,240`. Manifest ghi nguồn renderer, số frame, số frame khác nhau, checksum và kích thước; validator phát hiện GIF thiếu hoặc không khớp renderer.
 
 ## Có những kiểu nào?
 
@@ -121,9 +164,9 @@ Agent không hỗ trợ cú pháp `$skill` vẫn có thể đọc Markdown và m
 - [Stable reveal](skills/devoralabs-web-motion/assets/stable-reveal.mjs): helper có thể tích hợp, không phụ thuộc framework.
 - `assets/source/`: snapshot các engine motion gốc của hai web. Đây là mã học cách triển khai, phụ thuộc DOM của website gốc, không phải template website chạy độc lập.
 
-## Kiểm thử helper
+## Kiểm thử catalog và helper
 
-Không cần cài Node/Playwright chỉ để đọc hoặc cài skill. Các lệnh dưới dành cho người muốn kiểm thử helper đi kèm, không thay thế kiểm thử website được tạo.
+Không cần cài Node/Playwright chỉ để đọc hoặc cài skill. Các lệnh dưới dành cho người muốn kiểm thử catalog và helper đi kèm, không thay thế kiểm thử website được tạo.
 
 Tại thư mục gốc repo:
 
@@ -146,6 +189,6 @@ npm test
 BROWSER_CHANNEL=chrome npm test
 ```
 
-Script tự mở fixture local riêng, kiểm tra hình học cốt lõi Web 1 và helper reveal ở 1440px/390px: chuyển động hiển thị thật, dừng ổn định, replay, focus, reduced motion, giữ input và dọn listener. Không truy cập production, không cài dependency hoặc deploy tự động. Đây không phải bài kiểm thử toàn bộ 9 giao diện trên mọi trình duyệt.
+`npm test` kiểm tra đủ 240 GIF, checksum, frame và các liên kết recipe; kiểm tra gallery ở 1440px/390px với tìm ID, bộ lọc, phát/dừng, chép prompt và ảnh tĩnh mặc định. Phần helper tự mở fixture local riêng, kiểm tra hình học cốt lõi Web 1 và helper reveal ở 1440px/390px: chuyển động hiển thị thật, dừng ổn định, replay, focus, reduced motion, giữ input và dọn listener. Không truy cập production, không cài dependency hoặc deploy tự động. Đây không phải bài kiểm thử toàn bộ 9 giao diện trên mọi trình duyệt.
 
 Skill không tự cấp quyền push, merge, deploy hoặc thay đổi website ngoài phạm vi yêu cầu.

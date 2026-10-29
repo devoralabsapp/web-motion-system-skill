@@ -1,0 +1,29 @@
+# 215 — Guided product tour
+
+Hướng dẫn từng điểm
+
+**Category:** Product · **Kind:** effect
+
+![Guided product tour demo](../../assets/gifs/215-guided-product-tour.gif)
+
+## Implementation recipe
+
+Anchor an accessible step to actual controls and allow immediate dismissal.
+
+Use real app elements when the design calls for live UI; presentation must never mutate business state.
+
+**Starting timing:** start around 850ms for a discrete transition; ongoing indicators follow real activity and stop when it ends. The 3-second teaching GIF is not a required production duration.
+
+## Adaptation checks
+
+End in the intended readable, interactive state. Do not retain a clipped, distorted or transparent final control.
+
+Preserve focus, selected items and form/demo state. Respect reduced motion and stop work in hidden views.
+
+Verify a real intermediate frame and the settled state; do not infer visible movement from a class or animation object alone.
+
+## Demo source
+
+[Deterministic renderer](../../assets/catalog/demo-engine.mjs): zero-based group 21, branch 4. Call `drawDemo(context, 215, normalizedTime)` on a 400 × 260 Canvas. The full source is study material; port only the selected mechanism into production.
+
+[Group GIFs](22-product.md) · [Catalog index](../catalog.md) · [Reliability](../reliability.md)
