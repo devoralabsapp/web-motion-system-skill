@@ -1,6 +1,6 @@
 import {projects,services,profile} from './content.js';
 import {initialOrders,initialRequests,products,advanceOrder,approveRequest,changeQuantity,cartSummary} from './demo-state.js';
-import {createCreativeMotion} from './creative-motion.js';
+import {createCreativeMotion} from './creative-motion.js?v=process-stable-2';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND'}).format(n);

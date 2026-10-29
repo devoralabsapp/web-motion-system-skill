@@ -1,7 +1,7 @@
 // Presentation only: never re-render demos, forms, project data or navigation.
 export function createCreativeMotion({getTheme,isReduced,isDialogOpen}){
  const hero=document.querySelector('.hero'),studio=document.querySelector('.hero-studio'),visual=document.querySelector('.hero-visual'),image=document.querySelector('#hero-image');
- const scenes=[...document.querySelectorAll('.hero-copy h1,.section-heading h2,.project-row,.process li,.about h2')];
+ const scenes=[...document.querySelectorAll('.hero-copy h1,.section-heading h2,.project-row,.about h2')];
  const active=new Set(),seen=new WeakSet();let raf=0,visible=true,progress=0,target=0,lastTheme=getTheme(),introPlayed=false;
  const shot=document.querySelector('#hero-shot');
  const hint=document.createElement('a');hint.className='motion-hint';hint.href='#projects';hint.innerHTML='<span aria-hidden="true">↓</span> Cuộn để khám phá sản phẩm';hero.querySelector('.hero-copy').append(hint);
@@ -21,10 +21,6 @@ export function createCreativeMotion({getTheme,isReduced,isDialogOpen}){
   else if(row){const art=el.querySelector('.project-image'),copy=el.querySelector('.project-copy');
    animate(art,theme==='cobalt-court'?[{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0)'}]:theme==='cutout-dept'?[{transform:'perspective(1000px) rotateX(-28deg) translateY(55px)',clipPath:'inset(0 0 15%)'},{transform:'perspective(1000px) rotateX(3deg) translateY(-5px)',offset:.75,clipPath:'inset(0)'},{transform:'none',clipPath:'inset(0)'}]:[{clipPath:'inset(20% 12%)',transform:'scale(.9)'},{clipPath:'inset(0)',transform:'scale(1)'}],{duration:1100});
    animate(copy,theme==='cobalt-court'?[{clipPath:'inset(0 100% 0 0)',transform:'translateX(-45px)'},{clipPath:'inset(0)',transform:'translateX(0)'}]:[{clipPath:'inset(0 0 100%)'},{clipPath:'inset(0)'}],{delay:160,duration:900});
-  }else if(el.matches('.process li')){
-   // Keep the observed card unclipped: clipping it changes its intersection and
-   // can repeatedly rearm its own reveal even while the visitor is standing still.
-   [...el.children].forEach((part,i)=>animate(part,[{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0)'}],{duration:850,delay:i*70}));
   }
  }
  const observer=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting&&!seen.has(e.target)&&visible&&!isReduced()){seen.add(e.target);reveal(e.target)}else if(!e.isIntersecting)seen.delete(e.target)}},{threshold:.18});
