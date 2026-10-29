@@ -1,0 +1,92 @@
+[
+  {
+    "mode": "orders",
+    "outside": [],
+    "overflow": false,
+    "width": 320
+  },
+  {
+    "mode": "shop",
+    "outside": [],
+    "overflow": false,
+    "width": 320
+  },
+  {
+    "mode": "internal",
+    "outside": [],
+    "overflow": false,
+    "width": 320
+  },
+  {
+    "mode": "orders",
+    "outside": [],
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "mode": "shop",
+    "outside": [],
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "mode": "internal",
+    "outside": [],
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "mode": "orders",
+    "outside": [],
+    "overflow": false,
+    "width": 768
+  },
+  {
+    "mode": "shop",
+    "outside": [],
+    "overflow": false,
+    "width": 768
+  },
+  {
+    "mode": "internal",
+    "outside": [],
+    "overflow": false,
+    "width": 768
+  },
+  {
+    "mode": "orders",
+    "outside": [],
+    "overflow": false,
+    "width": 1024
+  },
+  {
+    "mode": "shop",
+    "outside": [],
+    "overflow": false,
+    "width": 1024
+  },
+  {
+    "mode": "internal",
+    "outside": [],
+    "overflow": false,
+    "width": 1024
+  },
+  {
+    "mode": "orders",
+    "outside": [],
+    "overflow": false,
+    "width": 1440
+  },
+  {
+    "mode": "shop",
+    "outside": [],
+    "overflow": false,
+    "width": 1440
+  },
+  {
+    "mode": "internal",
+    "outside": [],
+    "overflow": false,
+    "width": 1440
+  }
+]

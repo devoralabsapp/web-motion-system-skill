@@ -1,0 +1,9 @@
+node_modules/
+.vercel/
+.env
+.env.*
+dist/
+preview.html
+*.log
+screenshots/source-*.jpg
+DEPLOYMENT.md

@@ -1,0 +1,4 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {diagramScenes,interpolateDiagram,diagramPath} from '../effects.js';
+test('All storyboard paths share topology and interpolate to exact endpoints',()=>{for(let i=0;i<2;i++){const a=diagramScenes[i],b=diagramScenes[i+1];assert.equal(a.length,38);assert.equal(b.length,38);assert.deepEqual(interpolateDiagram(a,b,0),a);assert.deepEqual(interpolateDiagram(a,b,1),b);assert.ok(interpolateDiagram(a,b,.5).every(Number.isFinite));assert.match(diagramPath(b),/^M[\d.]+ [\d.]+ C[\d. ]+$/);}});
+test('Interrupted or bounded transitions cannot extrapolate into invalid geometry',()=>{assert.deepEqual(interpolateDiagram(diagramScenes[0],diagramScenes[2],-1),diagramScenes[0]);assert.deepEqual(interpolateDiagram(diagramScenes[0],diagramScenes[2],2),diagramScenes[2]);assert.throws(()=>interpolateDiagram([1,2],[1,2,3],.5));});

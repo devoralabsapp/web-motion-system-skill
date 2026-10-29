@@ -1,0 +1,122 @@
+[
+  {
+    "documentWidth": 305,
+    "mode": "orders",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 305,
+    "width": 320
+  },
+  {
+    "documentWidth": 305,
+    "mode": "shop",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 305,
+    "width": 320
+  },
+  {
+    "documentWidth": 305,
+    "mode": "internal",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 305,
+    "width": 320
+  },
+  {
+    "documentWidth": 375,
+    "mode": "orders",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 375,
+    "width": 390
+  },
+  {
+    "documentWidth": 375,
+    "mode": "shop",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 375,
+    "width": 390
+  },
+  {
+    "documentWidth": 375,
+    "mode": "internal",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 375,
+    "width": 390
+  },
+  {
+    "documentWidth": 753,
+    "mode": "orders",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 753,
+    "width": 768
+  },
+  {
+    "documentWidth": 753,
+    "mode": "shop",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 753,
+    "width": 768
+  },
+  {
+    "documentWidth": 753,
+    "mode": "internal",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 753,
+    "width": 768
+  },
+  {
+    "documentWidth": 1009,
+    "mode": "orders",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 1009,
+    "width": 1024
+  },
+  {
+    "documentWidth": 1009,
+    "mode": "shop",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 1009,
+    "width": 1024
+  },
+  {
+    "documentWidth": 1009,
+    "mode": "internal",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 1009,
+    "width": 1024
+  },
+  {
+    "documentWidth": 1425,
+    "mode": "orders",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 1425,
+    "width": 1440
+  },
+  {
+    "documentWidth": 1425,
+    "mode": "shop",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 1425,
+    "width": 1440
+  },
+  {
+    "documentWidth": 1425,
+    "mode": "internal",
+    "overflow": [],
+    "statOverflow": [],
+    "viewport": 1425,
+    "width": 1440
+  }
+]

@@ -1,0 +1,12 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const read=file=>readFile(new URL(file,import.meta.url),'utf8');
+let html=await read('index.html');
+for(const file of ['assets/theme-tokens.css','style.css','components.css','motion.css','effects.css'])html=html.replace(`<link rel="stylesheet" href="${file}">`,`<style>\n${await read(file)}\n</style>`);
+html=html.replace('<script type="module" src="app.js"></script>','');
+const content=(await read('content.js')).replace(/^export /gm,'');
+const state=(await read('demo-state.js')).replace(/^export /gm,'');
+const effects=(await read('effects.js')).replace(/^export /gm,'');
+const app=(await read('app.js')).replace(/^import .+;\r?\n/gm,'');
+html=html.replace('</body>',`<script>\n(()=>{\n${content}\n${state}\n${effects}\n${app}\n})();\n</script>\n</body>`);
+await writeFile(new URL('preview.html',import.meta.url),html);
+console.log('Created preview.html: opens directly without a server. Keep assets/ beside it.');
