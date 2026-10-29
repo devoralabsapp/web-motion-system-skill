@@ -1,0 +1,4 @@
+interface:
+  display_name: "DevoraLabs Web Motion"
+  short_description: "Recreate all six Web 1 and three Web 2 motion styles"
+  default_prompt: "Use $devoralabs-web-motion to reproduce the motion styles of Web 1 and Web 2 while preserving state, stable replay and reduced-motion support."

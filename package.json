@@ -1,0 +1,13 @@
+{
+  "name": "devoralabs-web-motion",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reusable agent skill for the six Web 1 and three Web 2 DevoraLabs motion styles",
+  "scripts": {
+    "test": "node skills/devoralabs-web-motion/scripts/verify-reveal.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
