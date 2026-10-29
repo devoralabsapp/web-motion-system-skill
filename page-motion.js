@@ -36,13 +36,20 @@ export function initPageMotion(){
  rail.querySelector('a').addEventListener('click',event=>{event.preventDefault();document.querySelector('.site-header .brand').click();});
  const topLine=document.createElement('div');topLine.className='page-reading-line';topLine.setAttribute('aria-hidden','true');document.body.append(topLine);
  const railStops=[...rail.querySelectorAll('a')],process=document.querySelector('.process-list'),processSteps=[...process.children],projectCards=[...document.querySelectorAll('.project-record')];
- const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){entry.target.classList.add('motion-shown');observer.unobserve(entry.target);}}},{threshold:.06,rootMargin:'0px 0px -28px'});
+ function reveal(unit){if(!active)return;if(!unit.classList.contains('motion-shown')){unit.dataset.motionRuns=String(Number(unit.dataset.motionRuns||0)+1);unit.classList.add('motion-shown');}}
+ function rearm(unit,rect=unit.getBoundingClientRect()){
+  if(!active||reduced()||unit.querySelector('input:focus,textarea:focus,select:focus'))return;
+  if(rect.bottom<-100||rect.top>innerHeight+100)unit.classList.remove('motion-shown','motion-settled');
+ }
+ const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting)reveal(entry.target);},{threshold:.06,rootMargin:'0px 0px -28px'});
+ const resetObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(!entry.isIntersecting)rearm(entry.target,entry.boundingClientRect);},{threshold:0,rootMargin:'110px 0px'});
  const sectionObserver=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}schedule();},{rootMargin:'120px'});
  sections.forEach(section=>sectionObserver.observe(section));
  const showEverything=()=>{units.forEach(unit=>unit.classList.add('motion-shown','motion-settled'));};
- if(reduced())showEverything();else units.forEach(unit=>observer.observe(unit));
+ if(reduced())showEverything();units.forEach(unit=>{observer.observe(unit);resetObserver.observe(unit);});
  html.classList.add('page-motion');
  document.addEventListener('focusin',event=>{const unit=event.target.closest('.motion-unit');if(unit)unit.classList.add('motion-shown','motion-settled');});
+ document.addEventListener('focusout',event=>{const unit=event.target.closest('.motion-unit');if(unit)queueMicrotask(()=>rearm(unit));});
  // All geometry reads precede writes; rAF runs only while scrolling or settling.
  function update(now){frame=0;if(!active||document.hidden)return;
   const delta=Math.min(48,now-lastTime||16);lastTime=now;const staticMode=reduced(),vh=innerHeight;
@@ -69,7 +76,7 @@ export function initPageMotion(){
  function schedule(){if(!frame&&active&&!document.hidden)frame=requestAnimationFrame(update);}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
  new ResizeObserver(schedule).observe(document.querySelector('main'));
- document.addEventListener('motion:change',()=>{if(reduced()){showEverything();document.querySelectorAll('.project-record').forEach(el=>{el.dataset.drift='0';el.style.setProperty('--preview-drift','0px');});}schedule();});
+ document.addEventListener('motion:change',()=>{if(reduced()){showEverything();document.querySelectorAll('.project-record').forEach(el=>{el.dataset.drift='0';el.style.setProperty('--preview-drift','0px');});}else units.forEach(unit=>{if(!unit.querySelector('input:focus,textarea:focus,select:focus'))unit.classList.remove('motion-settled');rearm(unit);});schedule();});
  function setActive(next){active=next;html.dataset.viewActive=String(next);
   if(!next){for(const animation of document.getAnimations())if(animation.playState==='running'){animation.pause();moving.add(animation);}}
   else{for(const animation of moving)if(animation.playState==='paused')animation.play();moving.clear();}

@@ -1,6 +1,6 @@
 # Từ quy trình đến sản phẩm — Redline Atelier
 
-Website portfolio cá nhân tiếng Việt, art direction Redline Atelier. Phiên bản 1.4 ưu tiên Một nét với motion xuyên suốt toàn trang và chuỗi morph mềm hơn. Cả hai kiểu vẫn trong một repo, một website, chuyển bằng thanh chọn ở đầu trang. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
+Portfolio song ngữ Việt/Anh, art direction Redline Atelier. Phiên bản 1.5 có sáu tab riêng, animation phát lại khi cuộn trở về section, cùng một repo và website. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
 
 Bản gốc 1.1 được giữ trong `classic.html` và `classic/`, đồng thời còn snapshot tag `v1.1-current`. Bản “Một nét, thành hệ thống” ở `one-line.html`. Website chung: https://redline-personal.vercel.app. Đây là cập nhật theo yêu cầu gom và deploy chung sau khi đã bàn giao preview 1.2.
 
@@ -16,7 +16,7 @@ Mỗi kiểu chỉ tải khi mở lần đầu, sau đó giữ nguyên trang tro
 
 **Để chỉnh sửa:** tại thư mục này chạy `npm run dev`, rồi mở http://127.0.0.1:4173. Không cần cài dependency. Dùng Node.js 18 trở lên. Dừng máy chủ bằng Ctrl+C. Cổng đang dùng: 4173.
 
-`index.html` là trang chọn; `classic.html` và `one-line.html` là hai trang portfolio. `content.js`, `demo-state.js` dùng chung. `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js`, `story.css` phục vụ Một nét; `page-motion.js` và `page-motion.css` điều phối các section phía dưới. `classic/app.js`, `classic/effects.js` giữ bản gốc. `npm run build` kiểm tra cú pháp, tám kiểm thử dữ liệu/hình học và tạo cả ba preview cùng thư mục tĩnh `dist/`.
+`index.html` là trang chọn; `classic.html` và `one-line.html` là hai trang portfolio. `content.js`, `demo-state.js` dùng chung. `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js`, `story.css` phục vụ Một nét; `page-motion.js` và `page-motion.css` điều phối các section phía dưới. `classic/app.js`, `classic/effects.js` giữ bản gốc. `npm run build` kiểm tra cú pháp, 11 kiểm thử dữ liệu/hình học/bản dịch và tạo cả ba preview cùng thư mục tĩnh `dist/`.
 
 ## Chỉnh nội dung
 
@@ -54,3 +54,13 @@ Font được đóng gói từ Google Fonts: Be Vietnam Pro Regular/SemiBold và
 `vercel.json` build bằng `npm run build`, phục vụ duy nhất `dist/`; tài liệu, kiểm thử, ảnh QA và máy chủ phát triển không được đưa vào website công khai. Git integration dùng nhánh `main`. Không cần biến môi trường hoặc token trong mã nguồn. Repo GitHub được yêu cầu để private; quyền truy cập website tuân theo cấu hình của project Vercel.
 
 Trang hiện để `noindex, follow` vì còn thông tin danh tính chưa bổ sung. Khi hoàn thiện nội dung, bỏ meta robots này và cập nhật domain/metadata. URL triển khai được gắn ở phần About của repo GitHub sau khi xác minh; báo cáo `DEPLOYMENT.md` lưu trong bản bàn giao cục bộ.
+
+## Việt / Anh và sáu style (1.5)
+
+Bộ chọn có sáu tab riêng: Bản gốc (classic), Một nét (one-line), Chữ động (kinetic), Xếp lớp (layers), Bản vẽ (blueprint), Quỹ đạo (orbit). Ví dụ: ?style=blueprint&lang=en. Mặc định vẫn là Một nét; VI/EN dùng chung cho tất cả tab và được nhớ bằng redline-language. Trên điện thoại, vuốt thanh tab để xem đủ sáu kiểu.
+
+Bốn profile mới dùng chung ứng dụng trong one-line.html?variant=<id>, artwork và choreography định nghĩa trong motion-profiles.js/CSS. translations.js chứa catalog dịch; i18n-text.js giữ ID/số lượng của nhãn động; i18n.js dịch nội dung/metadata/aria/placeholder và tạo brief. Thêm nội dung mới cần thêm bản dịch tương ứng.
+
+Đổi ngôn ngữ không tải lại frame, không xóa state demo, form hoặc nội dung người dùng nhập. Brief đang sửa giữ nguyên, tạo lại sẽ dùng ngôn ngữ hiện tại. Currency luôn là VND. Ảnh project tiếng Anh chụp từ chính ứng dụng.
+
+Section rearm sau khi hoàn toàn ra khỏi viewport; input đang focus được bảo vệ. Hero phát lại khi cuộn ngược có chủ đích, dữ liệu vẫn giữ. Đọc LANGUAGES-AND-STYLES.md và video/JSON trong ../redline-delivery/six-styles/. Các phần ghi theo 1.2–1.4 ở trên là lịch sử triển khai.

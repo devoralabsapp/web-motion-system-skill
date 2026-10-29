@@ -41,8 +41,11 @@ export function initMotion(){
  select('h1').classList.add('kinetic-heading');
  const vietnameseLabels=['LỌC ĐƠN · THEO DÕI · XỬ LÝ','CHỌN HÀNG · THÊM GIỎ · ĐIỀU CHỈNH','YÊU CẦU · PHÊ DUYỆT · THEO DÕI'];
  document.querySelectorAll('.project-shot').forEach((shot,i)=>{const context=document.createElement('span');context.className='preview-context';context.textContent=vietnameseLabels[i];context.setAttribute('aria-hidden','true');shot.append(context);});
- const reveal=new IntersectionObserver((entries,observer)=>{for(const entry of entries){if(entry.isIntersecting){if(!reduced())entry.target.classList.add('motion-enter');observer.unobserve(entry.target);}}},{threshold:.15});
+ const reveal=new IntersectionObserver((entries,observer)=>{for(const entry of entries){if(entry.isIntersecting){if(!reduced())entry.target.classList.add('motion-enter');}}},{threshold:.15});
  document.querySelectorAll('.section-heading,.about-lead,.service-row').forEach(el=>reveal.observe(el));
+ const resetReveals=new IntersectionObserver(entries=>{for(const entry of entries)if(!entry.isIntersecting&&(entry.boundingClientRect.bottom<-100||entry.boundingClientRect.top>innerHeight+100))entry.target.classList.remove('motion-enter');},{rootMargin:'110px'});
+ document.querySelectorAll('.section-heading,.about-lead,.service-row').forEach(el=>resetReveals.observe(el));
+ let heroWasAway=false;new IntersectionObserver(entries=>{const entry=entries[0];if(entry.isIntersecting&&heroWasAway){heroWasAway=false;const heading=select('h1');heading.classList.remove('kinetic-heading');void heading.offsetWidth;heading.classList.add('kinetic-heading');story();}else if(!entry.isIntersecting&&(entry.boundingClientRect.bottom<-100||entry.boundingClientRect.top>innerHeight+100))heroWasAway=true;},{rootMargin:'110px'}).observe(drawing);
  const process=select('.process-list');let processVisible=false,scrollFrame=0;
  function updateProcess(){scrollFrame=0;const rect=process.getBoundingClientRect();const progress=reduced()?1:Math.max(0,Math.min(1,(innerHeight*.7-rect.top)/(rect.height*.9)));process.style.setProperty('--process-progress',progress);process.querySelectorAll('li').forEach(li=>li.classList.toggle('step-reached',reduced()||li.getBoundingClientRect().top<innerHeight*.7));}
  new IntersectionObserver(entries=>{processVisible=entries[0].isIntersecting;if(processVisible)updateProcess();},{rootMargin:'50px'}).observe(process);

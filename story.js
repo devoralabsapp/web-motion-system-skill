@@ -1,4 +1,6 @@
 import {clamp,range,ease,scrollProgress,moduleRect,mixPath,cubicPath,followProgress,pointAlongCubic} from './story-math.js';
+import {getLanguage} from './i18n.js';
+import {translatePhrase} from './i18n-text.js';
 
 export function initStory(){
  const root=document.querySelector('#one-line-story');
@@ -11,7 +13,7 @@ export function initStory(){
  const media=matchMedia('(max-width: 680px)');
  const reduced=()=>document.documentElement.dataset.motion==='reduced'||matchMedia('(prefers-reduced-motion: reduce)').matches;
  let modules=[],paperHeight=700,travel=1400,canvasHeight=850,frame=0,playFrame=0,override=null,interacted=false,measuring=false;
- let displayed=null,lastTime=0,stageWidth=0,copyHeight=0,active=true,lastPainted=null,lastInteracted=null;
+ let displayed=null,lastTime=0,stageWidth=0,copyHeight=0,active=true,lastPainted=null,lastInteracted=null,introArmed=false,reverseIntentUntil=0,touchY=0;
  const wiring=root.querySelector('.story-wiring'),steps=[...root.querySelectorAll('.story-step')];
  wire.setAttribute('pathLength','1');
  let finalFrame={x:0,y:120,width:1200,height:550},divisions=[];
@@ -57,6 +59,11 @@ export function initStory(){
    return [{x:x+(m.index===1?7:-3),y:24+m.index*137,width:cardWidth-10,height:96,rotation:[-3,2,-1][m.index]},
     {x:12,y:40+m.index*118,width:width-24,height:88,rotation:0}];}
   const slots=[{x:width*.535,y:102,width:Math.min(252,width*.26),height:98,rotation:-5},{x:width*.735,y:264,width:Math.min(232,width*.24),height:102,rotation:4},{x:width*.585,y:432,width:Math.min(250,width*.26),height:96,rotation:-2}];
+  const profile=document.documentElement.dataset.motionStyle;
+  if(profile==='kinetic')slots.forEach((slot,i)=>{slot.rotation=0;slot.x=width*[.56,.72,.56][i];slot.height=[88,120,88][i];});
+  if(profile==='layers')slots.forEach((slot,i)=>{slot.rotation=[-8,-3,3][i];slot.x=width*[.55,.64,.7][i];slot.y=95+i*145;});
+  if(profile==='blueprint')slots.forEach((slot,i)=>{slot.rotation=0;slot.x=width*.65;slot.y=90+i*150;slot.width=width*.29;});
+  if(profile==='orbit')slots.forEach((slot,i)=>{slot.rotation=[-12,10,-6][i];slot.x=width*[.55,.75,.56][i];slot.y=[60,255,450][i];});
   return [slots[m.index],{x:width*.63,y:60+m.index*132,width:Math.min(350,width*.34),height:98,rotation:0}];
  }
  function drawThread(rects,p){
@@ -91,7 +98,7 @@ export function initStory(){
   root.style.setProperty('--plane-x',reduced()?'0deg':((1-range(p,.32,.9))*5)+'deg');
   root.style.setProperty('--plane-y',reduced()?'0deg':((1-range(p,.32,.9))*-5)+'deg');
   const rects=[];
-  modules.forEach(m=>{if(!m.end||!m.end.width)return;const question=p>=.9?'':questions[m.index];if(m.element.dataset.question!==question)m.element.dataset.question=question;const [start,aligned]=sceneRects(m,width),rect=moduleRect(start,aligned,m.end,p);rects[m.index]=rect;
+  modules.forEach(m=>{if(!m.end||!m.end.width)return;const question=p>=.9?'':translatePhrase(questions[m.index],getLanguage());if(m.element.dataset.question!==question)m.element.dataset.question=question;const [start,aligned]=sceneRects(m,width),rect=moduleRect(start,aligned,m.end,p);if(document.documentElement.dataset.motionStyle==='orbit'&&p>.16&&p<.43){const arc=Math.sin(range(p,.16,.43)*Math.PI);rect.x+=arc*[30,-25,22][m.index];rect.y-=arc*18;}rects[m.index]=rect;
    const sx=rect.width/m.end.width,sy=rect.height/m.end.height;
    m.element.style.transform=`translate3d(${rect.x-m.end.x}px,${rect.y-m.end.y}px,0) rotate(${rect.rotation}deg) scale(${sx},${sy})`;
    m.element.style.setProperty('--inverse-x',1/sx);m.element.style.setProperty('--inverse-y',1/sy);
@@ -133,10 +140,22 @@ export function initStory(){
   function tick(now){start??=now;override=clamp((now-start)/1800);paint();if(override<1)playFrame=requestAnimationFrame(tick);else{interacted=true;override=null;paint();}}
   playFrame=requestAnimationFrame(tick);
  });
- addEventListener('scroll',()=>{if(override!==null){cancelAnimationFrame(playFrame);override=null;}schedule();},{passive:true});
+ addEventListener('wheel',event=>{if(event.deltaY<0)reverseIntentUntil=performance.now()+1400;},{passive:true});
+ addEventListener('touchstart',event=>{touchY=event.touches[0]?.clientY||0;},{passive:true});
+ addEventListener('touchmove',event=>{const next=event.touches[0]?.clientY||0;if(next>touchY)reverseIntentUntil=performance.now()+1400;touchY=next;},{passive:true});
+ addEventListener('keydown',event=>{if(['PageUp','ArrowUp','Home'].includes(event.key)||(event.key===' '&&event.shiftKey))reverseIntentUntil=performance.now()+1400;});
+ addEventListener('scroll',()=>{
+  if(override!==null){cancelAnimationFrame(playFrame);override=null;}
+  const raw=media.matches?range(innerHeight*.82-stage.getBoundingClientRect().top,0,Math.min(innerHeight*.72,560)):scrollProgress(root.getBoundingClientRect().top,travel);
+  if(raw>.45)introArmed=true;
+  if(interacted&&raw<.2&&performance.now()<reverseIntentUntil){interacted=false;lastPainted=null;if(root.querySelector('[aria-selected=true]')?.dataset.mode!=='orders')document.dispatchEvent(new Event('story:orders'));}
+  if(raw<.04&&introArmed&&!reduced()){introArmed=false;root.classList.remove('intro-replay');void root.offsetWidth;root.classList.add('intro-replay');}
+  schedule();
+ },{passive:true});
  addEventListener('resize',()=>{cancelAnimationFrame(playFrame);override=null;requestAnimationFrame(measure);},{passive:true});
  document.addEventListener('demo:render',()=>{prepareModules();measure();});
  document.addEventListener('motion:change',()=>{cancelAnimationFrame(playFrame);override=null;measure();});
+ document.addEventListener('language:change',()=>requestAnimationFrame(measure));
  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(playFrame);override=null;paint();}});
  document.addEventListener('view:change',e=>{active=e.detail.active;if(!active){cancelAnimationFrame(playFrame);override=null;paint(performance.now(),true);}else{lastTime=0;measure();}});
  new ResizeObserver(()=>{if(!measuring)requestAnimationFrame(measure);}).observe(plane);
