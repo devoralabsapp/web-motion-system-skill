@@ -1,5 +1,6 @@
 import {initI18n,refreshLanguage,getLanguage,setLanguage} from './i18n.js';
 import {translatePhrase} from './i18n-text.js';
+import {initMotionNotice} from './motion-notice.js';
 export const styles=[
  {id:'classic',label:'Bản gốc',title:'Portfolio DevoraLabs — Bản gốc',url:'classic.html'},
  {id:'one-line',label:'Một nét, thành hệ thống',title:'Portfolio DevoraLabs — Một nét, thành hệ thống',url:'one-line.html'},
@@ -73,3 +74,4 @@ addEventListener('message',event=>{if(event.origin!==location.origin||event.sour
 selectStyle(chosenStyle(),{historyMode:'replace',initial:true});
 
 syncLanguage();refreshLanguage();
+initMotionNotice();

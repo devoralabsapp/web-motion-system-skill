@@ -15,7 +15,7 @@ for(const variant of ['classic','one-line']){
 let shell=await read('index.html');
 shell=shell.replace('<link rel="stylesheet" href="switcher.css">',`<style>\n${await read('switcher.css')}\n</style>`);
 shell=shell.replace('<script type="module" src="switcher.js"></script>','');
-const controller=([await js('translations.js'),await js('i18n-text.js'),await js('i18n.js'),await js('switcher.js')].join('\n')).replaceAll("url:'classic.html'","url:'preview-classic.html'").replaceAll("url:'one-line.html'","url:'preview-one-line.html'");
+const controller=([await js('translations.js'),await js('i18n-text.js'),await js('i18n.js'),await js('motion-notice.js'),await js('switcher.js')].join('\n')).replaceAll("url:'classic.html'","url:'preview-classic.html'").replaceAll("url:'one-line.html'","url:'preview-one-line.html'");
 shell=shell.replace('</body>',`<script>\n(()=>{\n${controller}\n})();\n</script>\n</body>`);
 await writeFile(new URL('preview.html',import.meta.url),shell);
 console.log('Created offline switcher + two standalone previews. Keep preview-*.html and assets/ beside preview.html.');
