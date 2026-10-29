@@ -2,6 +2,7 @@
 export function createCreativeMotion({getTheme,isReduced,isDialogOpen}){
  const hero=document.querySelector('.hero'),studio=document.querySelector('.hero-studio'),visual=document.querySelector('.hero-visual'),image=document.querySelector('#hero-image');
  const scenes=[...document.querySelectorAll('.hero-copy h1,.section-heading h2,.project-row,.about h2')];
+ const processSteps=[...document.querySelectorAll('#process>ol>li')].map(el=>({el,armed:true,animations:[]}));
  const active=new Set(),seen=new WeakSet();let raf=0,visible=true,progress=0,target=0,lastTheme=getTheme(),introPlayed=false;
  const shot=document.querySelector('#hero-shot');
  const hint=document.createElement('a');hint.className='motion-hint';hint.href='#projects';hint.innerHTML='<span aria-hidden="true">↓</span> Cuộn để khám phá sản phẩm';hero.querySelector('.hero-copy').append(hint);
@@ -25,8 +26,22 @@ export function createCreativeMotion({getTheme,isReduced,isDialogOpen}){
  }
  const observer=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting&&!seen.has(e.target)&&visible&&!isReduced()){seen.add(e.target);reveal(e.target)}else if(!e.isIntersecting)seen.delete(e.target)}},{threshold:.18});
  scenes.forEach(el=>observer.observe(el));
+ // These reading cards use stable layout geometry, never IntersectionObserver.
+ // Re-arm only after a full exit with a margin, not at a clipped viewport edge.
+ function updateProcess(){
+  for(const state of processSteps){
+   const rect=state.el.getBoundingClientRect();
+   if(rect.bottom< -96||rect.top>innerHeight+96){
+    if(!state.armed){state.animations.forEach(a=>a?.cancel());state.animations=[];state.armed=true;}
+   }else if(state.armed&&rect.top<innerHeight*.88&&rect.bottom>0){
+    state.armed=false;
+    state.animations=[...state.el.children].map((part,i)=>animate(part,[{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0)'}],{duration:850,delay:i*70}));
+   }
+  }
+ }
  function clearScroll(){studio.style.setProperty('--scene-progress','0');image.style.removeProperty('transform');rail.style.removeProperty('transform');}
  function tick(){raf=0;if(!visible||isReduced()||isDialogOpen())return;
+  updateProcess();
   progress=target;
   const t=Math.max(0,Math.min(1,progress)),theme=getTheme();studio.style.setProperty('--scene-progress',t.toFixed(4));
   if(theme==='frame-shift'){image.style.transform=`translateY(${-t*38}px) scale(${1.085-t*.085})`;rail.style.transform=`scale(${.9+t*.1})`}
