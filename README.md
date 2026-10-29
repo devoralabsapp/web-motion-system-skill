@@ -1,6 +1,8 @@
 # Từ quy trình đến sản phẩm — Redline Atelier
 
-Website portfolio cá nhân tiếng Việt, một art direction thống nhất. Phiên bản 1.1 bổ sung SVG biến đổi, nét vẽ tự hiện, nhịp cuộn và phản hồi giao diện. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
+Website portfolio cá nhân tiếng Việt, art direction Redline Atelier. Phiên bản 1.2 “Một nét, thành hệ thống” bổ sung chuỗi morph từ ba module HTML đến demo thao tác thật, typography qua mask và chuyển dự án từ preview. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
+
+Bản 1.1 được giữ nguyên trên `main`, tag `v1.1-current` và production https://redline-personal.vercel.app. Bản 1.2 phát triển trên `motion-one-line` để xem riêng bằng Vercel preview. Không merge hoặc promote bản này khi chưa có yêu cầu thay thế.
 
 ## Xem website
 
@@ -8,7 +10,7 @@ Website portfolio cá nhân tiếng Việt, một art direction thống nhất. 
 
 **Để chỉnh sửa:** tại thư mục này chạy `npm run dev`, rồi mở http://127.0.0.1:4173. Không cần cài dependency. Dùng Node.js 18 trở lên. Dừng máy chủ bằng Ctrl+C. Cổng đang dùng: 4173.
 
-Các file nguồn gốc là `index.html`, `content.js`, `demo-state.js`, `app.js`, `effects.js` và các file CSS. Sau khi sửa, chạy `node build-preview.mjs` để cập nhật `preview.html`. `npm run check` kiểm tra cú pháp và năm kiểm thử dữ liệu/hình học. `npm run build` chạy kiểm thử rồi tạo bản xem trực tiếp và thư mục tĩnh `dist/`.
+Các file nguồn gốc là `index.html`, `content.js`, `demo-state.js`, `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js` và các file CSS. `story.css` chứa typography và bố cục chuyển cảnh. Sau khi sửa, chạy `node build-preview.mjs` để cập nhật `preview.html`. `npm run check` kiểm tra cú pháp và sáu kiểm thử dữ liệu/hình học. `npm run build` chạy kiểm thử rồi tạo bản xem trực tiếp và thư mục tĩnh `dist/`.
 
 ## Chỉnh nội dung
 
@@ -39,7 +41,7 @@ Theme: https://github.com/devoralabsapp/creative-theme-system-skill tại commit
 
 Font được đóng gói từ Google Fonts: Be Vietnam Pro Regular/SemiBold và IBM Plex Mono Regular. Giấy phép SIL OFL trong `assets/OFL-*.txt`. Đồ họa kiến trúc và hình sản phẩm SVG được vẽ riêng cho website; sản phẩm, giá và dữ liệu demo đều hư cấu.
 
-Đọc `QA.md`, `MOTION.md` và `screenshots/motion-responsive-check.json` để xem phạm vi kiểm tra. Ảnh desktop/mobile nằm trong `screenshots/`.
+Đọc `MOTION-ONE-LINE.md` và `QA-ONE-LINE.md` cho bản 1.2. `QA.md`, `MOTION.md` và ảnh trong `screenshots/` lưu lịch sử kiểm tra bản 1.1. Video desktop/mobile, dữ liệu kiểm thử bản 1.2 nằm trong thư mục bàn giao cục bộ `../redline-delivery/one-line/`.
 
 ## Vercel và mã nguồn private
 
