@@ -3,11 +3,11 @@ const read=file=>readFile(new URL(file,import.meta.url),'utf8');
 const js=async file=>(await read(file)).replace(/^export /gm,'').replace(/^import .+;\r?\n/gm,'');
 for(const variant of ['classic','one-line']){
  let html=await read(`${variant}.html`);
- const styles=['assets/theme-tokens.css','style.css','components.css','motion.css','effects.css',...(variant==='one-line'?['story.css']:[])];
+ const styles=['assets/theme-tokens.css','style.css','components.css','motion.css','effects.css',...(variant==='one-line'?['story.css','page-motion.css']:[])];
  for(const file of styles)html=html.replace(`<link rel="stylesheet" href="${file}">`,`<style>\n${await read(file)}\n</style>`);
  const app=variant==='classic'?'classic/app.js':'app.js';
  html=html.replace(`<script type="module" src="${app}"></script>`,'');
- const files=variant==='classic'?['content.js','demo-state.js','classic/effects.js',app]:['content.js','demo-state.js','effects.js','story-math.js','story.js','project-motion.js',app];
+ const files=variant==='classic'?['content.js','demo-state.js','classic/effects.js',app]:['content.js','demo-state.js','effects.js','story-math.js','story.js','project-motion.js','page-motion.js',app];
  const scripts=await Promise.all(files.map(js));
  html=html.replace('</body>',`<script>\n(()=>{\n${scripts.join('\n')}\n})();\n</script>\n</body>`);
  await writeFile(new URL(`preview-${variant}.html`,import.meta.url),html);

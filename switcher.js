@@ -3,11 +3,12 @@ export const styles=[
  {id:'one-line',label:'Một nét, thành hệ thống',title:'Portfolio Redline Atelier — Một nét, thành hệ thống',url:'one-line.html'}
 ];
 const valid=id=>styles.some(style=>style.id===id);
-const storageKey='redline-preferred-style';
+const storageKey='redline-preferred-style-v2';
+const frameOrigin=location.protocol==='file:'?'*':location.origin;
 let selected=null;
 const frames=new Map();
 function savedStyle(){try{return localStorage.getItem(storageKey);}catch{return null;}}
-function chosenStyle(){const query=new URLSearchParams(location.search).get('style');return valid(query)?query:valid(savedStyle())?savedStyle():'classic';}
+function chosenStyle(){const query=new URLSearchParams(location.search).get('style');return valid(query)?query:valid(savedStyle())?savedStyle():'one-line';}
 function mount(style,initial){
  if(frames.has(style.id))return;
  const panel=document.getElementById('panel-'+style.id),loading=panel.querySelector('.view-loading');
@@ -15,7 +16,7 @@ function mount(style,initial){
  const url=new URL(style.url,location.href);
  if(initial){const project=new URLSearchParams(location.search).get('project');if(project)url.searchParams.set('project',project);url.hash=location.hash;}
  frame.src=url.href;
- frame.addEventListener('load',()=>{loading.hidden=true;});
+ frame.addEventListener('load',()=>{loading.hidden=true;frame.contentWindow.postMessage({type:'redline:visibility',visible:selected===style.id},frameOrigin);});
  frames.set(style.id,frame);panel.append(frame);
 }
 function selectStyle(id,{historyMode='none',focus=false,initial=false}={}){
@@ -23,6 +24,7 @@ function selectStyle(id,{historyMode='none',focus=false,initial=false}={}){
  const style=styles.find(style=>style.id===id);
  mount(style,initial);
  selected=id;document.documentElement.dataset.style=id;
+ for(const [key,frame] of frames)frame.contentWindow.postMessage({type:'redline:visibility',visible:key===id},frameOrigin);
  for(const item of styles){const active=item.id===id;const tab=document.getElementById('style-'+item.id),panel=document.getElementById('panel-'+item.id);tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;panel.classList.toggle('is-inactive',!active);panel.inert=!active;panel.setAttribute('aria-hidden',String(!active));if(active&&focus)tab.focus();}
  document.title=style.title;
  document.getElementById('style-status').textContent='Đang xem: '+style.label+'.';
