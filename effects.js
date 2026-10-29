@@ -4,17 +4,10 @@ export function initMotion(){
  document.querySelectorAll('.brand-mark').forEach(mark=>{mark.innerHTML='<svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M10 26 26 10M11 10h15v15" stroke="currentColor" stroke-width="2"/></svg>';});
  const labels=['LỌC ĐƠN · THEO DÕI · XỬ LÝ','CHỌN HÀNG · THÊM GIỎ · ĐIỀU CHỈNH','YÊU CẦU · PHÊ DUYỆT · THEO DÕI'];
  document.querySelectorAll('.project-shot').forEach((shot,i)=>{const context=document.createElement('span');context.className='preview-context';context.textContent=labels[i];context.setAttribute('aria-hidden','true');shot.append(context);});
- const reveal=new IntersectionObserver((entries,observer)=>{for(const entry of entries){if(entry.isIntersecting){if(!reduced())entry.target.classList.add('motion-enter');observer.unobserve(entry.target);}}},{threshold:.15});
- document.querySelectorAll('.section-heading,.about-lead,.service-row').forEach(el=>reveal.observe(el));
- const process=select('.process-list');let visible=false,frame=0;
- function updateProcess(){frame=0;const r=process.getBoundingClientRect();const p=reduced()?1:Math.max(0,Math.min(1,(innerHeight*.7-r.top)/(r.height*.9)));process.style.setProperty('--process-progress',p);process.querySelectorAll('li').forEach(li=>li.classList.toggle('step-reached',reduced()||li.getBoundingClientRect().top<innerHeight*.7));}
- new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)updateProcess();},{rootMargin:'50px'}).observe(process);
- addEventListener('scroll',()=>{if(visible&&!frame)frame=requestAnimationFrame(updateProcess);},{passive:true});
- addEventListener('resize',()=>{if(visible&&!frame)frame=requestAnimationFrame(updateProcess);},{passive:true});
  const activeAnimations=new Set();
  function track(animation,cleanup=()=>{}){activeAnimations.add(animation);const finish=()=>{activeAnimations.delete(animation);cleanup();};animation.finished.then(finish,finish);}
  function cancelAnimations(){for(const animation of activeAnimations)animation.cancel();activeAnimations.clear();}
- document.addEventListener('motion:change',()=>{updateProcess();if(reduced())cancelAnimations();});
+ document.addEventListener('motion:change',()=>{if(reduced())cancelAnimations();});
  addEventListener('resize',cancelAnimations,{passive:true});
  function pulse(el){if(!el||reduced())return;el.classList.remove('motion-pulse');void el.offsetWidth;el.classList.add('motion-pulse');}
  let requestRects=new Map(),departing=null;
@@ -29,5 +22,5 @@ export function initMotion(){
   }
  });
  document.addEventListener('change',e=>{if(e.target.matches('#order-filter,#request-filter')&&!reduced())select('.filter-bar')?.classList.add('filter-updated');});
- new MutationObserver(()=>{if(!select('#brief-result').hidden)pulse(select('#brief-result'));}).observe(select('#brief-result'),{attributes:true,attributeFilter:['hidden']});
+ const brief=select('#brief-result');if(brief)new MutationObserver(()=>{if(!brief.hidden)pulse(brief);}).observe(brief,{attributes:true,attributeFilter:['hidden']});
 }

@@ -1,6 +1,7 @@
 import {profile,projects,services} from './content.js';
 import {initMotion} from './effects.js';
 import {initStory} from './story.js';
+import {initPageMotion} from './page-motion.js';
 import {prepareProjectMotion,runProjectMotion,cancelProjectMotion} from './project-motion.js';
 import {initialOrders,products,initialRequests,orderSummary,cartSummary,changeQuantity,advanceOrder,approveRequest} from './demo-state.js';
 const $=s=>document.querySelector(s);
@@ -55,3 +56,4 @@ const tabInk=document.createElement('span');tabInk.className='tab-ink';tabInk.se
 document.addEventListener('story:orders',()=>setMode('orders'));
 initMotion();
 initStory();
+initPageMotion();

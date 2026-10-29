@@ -1,12 +1,12 @@
 # Từ quy trình đến sản phẩm — Redline Atelier
 
-Website portfolio cá nhân tiếng Việt, art direction Redline Atelier. Phiên bản 1.3 gom hai kiểu vào một repo và một website, chuyển ngay bằng thanh chọn luôn hiện ở đầu trang. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
+Website portfolio cá nhân tiếng Việt, art direction Redline Atelier. Phiên bản 1.4 ưu tiên Một nét với motion xuyên suốt toàn trang và chuỗi morph mềm hơn. Cả hai kiểu vẫn trong một repo, một website, chuyển bằng thanh chọn ở đầu trang. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
 
 Bản gốc 1.1 được giữ trong `classic.html` và `classic/`, đồng thời còn snapshot tag `v1.1-current`. Bản “Một nét, thành hệ thống” ở `one-line.html`. Website chung: https://redline-personal.vercel.app. Đây là cập nhật theo yêu cầu gom và deploy chung sau khi đã bàn giao preview 1.2.
 
 ## Chuyển kiểu
 
-`index.html`, `switcher.css`, `switcher.js` tạo thanh chọn và hai vùng xem. Mặc định lần đầu là Bản gốc. `?style=classic` và `?style=one-line` mở đúng kiểu; lựa chọn được nhớ trên thiết bị nếu localStorage khả dụng. Có thể dùng Tab, Enter, phím trái/phải, Home/End và browser Back/Forward.
+`index.html`, `switcher.css`, `switcher.js` tạo thanh chọn và hai vùng xem. Mặc định từ bản 1.4 là Một nét. `?style=classic` và `?style=one-line` mở đúng kiểu; lựa chọn mới được nhớ bằng khóa `redline-preferred-style-v2` nếu localStorage khả dụng. Khóa phiên bản cũ không áp đặt Bản gốc lên mặc định mới. Có thể dùng Tab, Enter, phím trái/phải, Home/End và browser Back/Forward.
 
 Mỗi kiểu chỉ tải khi mở lần đầu, sau đó giữ nguyên trang trong phiên: vị trí cuộn, bộ lọc, dữ liệu demo, form và dialog không reset khi chuyển kiểu. Hai kiểu giữ dữ liệu độc lập để thử/so sánh; reload vẫn trả về dữ liệu demo mẫu như trước. Nội dung, dữ liệu mẫu, font, ảnh và CSS nền dùng chung. Chỉ app/motion của Bản gốc được giữ riêng để bảo toàn choreography.
 
@@ -16,14 +16,14 @@ Mỗi kiểu chỉ tải khi mở lần đầu, sau đó giữ nguyên trang tro
 
 **Để chỉnh sửa:** tại thư mục này chạy `npm run dev`, rồi mở http://127.0.0.1:4173. Không cần cài dependency. Dùng Node.js 18 trở lên. Dừng máy chủ bằng Ctrl+C. Cổng đang dùng: 4173.
 
-`index.html` là trang chọn; `classic.html` và `one-line.html` là hai trang portfolio. `content.js`, `demo-state.js` dùng chung. `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js`, `story.css` phục vụ Một nét; `classic/app.js`, `classic/effects.js` giữ bản gốc. Sau khi sửa, chạy `npm run build` để kiểm tra cú pháp, sáu kiểm thử dữ liệu/hình học và tạo cả ba preview cùng thư mục tĩnh `dist/`.
+`index.html` là trang chọn; `classic.html` và `one-line.html` là hai trang portfolio. `content.js`, `demo-state.js` dùng chung. `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js`, `story.css` phục vụ Một nét; `page-motion.js` và `page-motion.css` điều phối các section phía dưới. `classic/app.js`, `classic/effects.js` giữ bản gốc. `npm run build` kiểm tra cú pháp, tám kiểm thử dữ liệu/hình học và tạo cả ba preview cùng thư mục tĩnh `dist/`.
 
 ## Chỉnh nội dung
 
 - `content.js` → `profile`: điền `name`, `brand` (nếu có), `bio`, `email`, `zalo` (URL https://zalo.me/...), `siteUrl` (URL https đầy đủ). `null` nghĩa là chưa có thông tin. Tên tạm hiện tại là “Tên của bạn”.
 - `projects`: hồ sơ minh họa có bối cảnh, vai trò ở concept, giải pháp, luồng và giới hạn. Chỉ đổi nhãn thành dự án thật khi có bằng chứng và được phép công khai. Thay ảnh bằng ảnh thật tương ứng.
 - `services`: nội dung ba nhóm giải pháp và thông tin khách cần chuẩn bị.
-- `index.html`: headline, mô tả, quy trình, form và nội dung trang. Sửa title/description/og:title/og:description cùng thương hiệu trước khi công bố. Khi có domain, bổ sung canonical và metadata ảnh chia sẻ tuyệt đối.
+- `classic.html`, `one-line.html`: headline, mô tả, quy trình, form và nội dung từng trang; `index.html` là phần chọn kiểu. Sửa title/description/og:title/og:description cùng thương hiệu trước khi công bố. Khi có domain, bổ sung canonical và metadata ảnh chia sẻ tuyệt đối.
 - `assets/theme-tokens.css`: selector token Redline Atelier trích nguyên từ nguồn chuẩn. `style.css` ánh xạ sang vai trò của website; `components.css` chứa các section và responsive; `motion.css` chứa phần chuyển tiếp tác vụ thành tab.
 
 Thêm email/Zalo chỉ tạo kênh liên hệ trực tiếp. Form vẫn tạo brief cục bộ. Muốn gửi form thật cần xác định nơi nhận, triển khai endpoint, chống lạm dụng và xử lý đủ trạng thái gửi/thành công/thất bại. Không đổi dòng thông báo thành “đã gửi” nếu chưa chuyển dữ liệu.
@@ -47,7 +47,7 @@ Theme: https://github.com/devoralabsapp/creative-theme-system-skill tại commit
 
 Font được đóng gói từ Google Fonts: Be Vietnam Pro Regular/SemiBold và IBM Plex Mono Regular. Giấy phép SIL OFL trong `assets/OFL-*.txt`. Đồ họa kiến trúc và hình sản phẩm SVG được vẽ riêng cho website; sản phẩm, giá và dữ liệu demo đều hư cấu.
 
-Đọc `QA-SWITCHER.md` cho bản 1.3; `MOTION-ONE-LINE.md` và `QA-ONE-LINE.md` lưu bản 1.2. `QA.md`, `MOTION.md` và ảnh trong `screenshots/` lưu lịch sử bản 1.1. Video desktop/mobile bản 1.2 nằm trong thư mục bàn giao cục bộ `../redline-delivery/one-line/`.
+Đọc `MOTION-FULL-PAGE.md` cho bản 1.4; `QA-SWITCHER.md` lưu bản 1.3; `MOTION-ONE-LINE.md` và `QA-ONE-LINE.md` lưu bản 1.2. `QA.md`, `MOTION.md` và ảnh trong `screenshots/` lưu lịch sử bản 1.1. Video cuộn toàn trang bản 1.4 nằm ở thư mục bàn giao cục bộ `../redline-delivery/full-motion/`.
 
 ## Vercel và mã nguồn private
 
