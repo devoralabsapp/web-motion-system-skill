@@ -1,5 +1,7 @@
 # Kiểm chứng “Một nét, thành hệ thống” — 29/10/2026
 
+> Báo cáo lịch sử bản 1.2. Bản 1.3 tiếp tục giữ cả hai kiểu trong cùng website, xem QA-SWITCHER.md.
+
 ## Build và dữ liệu
 
 `npm run build` đạt: kiểm tra cú pháp, sáu kiểm thử về dữ liệu, tiến trình cuộn đảo chiều, module về slot và topology đường cubic; xuất `preview.html` và `dist/`. Website không thêm dependency runtime.

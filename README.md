@@ -1,16 +1,22 @@
 # Từ quy trình đến sản phẩm — Redline Atelier
 
-Website portfolio cá nhân tiếng Việt, art direction Redline Atelier. Phiên bản 1.2 “Một nét, thành hệ thống” bổ sung chuỗi morph từ ba module HTML đến demo thao tác thật, typography qua mask và chuyển dự án từ preview. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
+Website portfolio cá nhân tiếng Việt, art direction Redline Atelier. Phiên bản 1.3 gom hai kiểu vào một repo và một website, chuyển ngay bằng thanh chọn luôn hiện ở đầu trang. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
 
-Bản 1.1 được giữ nguyên trên `main`, tag `v1.1-current` và production https://redline-personal.vercel.app. Bản 1.2 phát triển trên `motion-one-line` để xem riêng bằng Vercel preview. Không merge hoặc promote bản này khi chưa có yêu cầu thay thế.
+Bản gốc 1.1 được giữ trong `classic.html` và `classic/`, đồng thời còn snapshot tag `v1.1-current`. Bản “Một nét, thành hệ thống” ở `one-line.html`. Website chung: https://redline-personal.vercel.app. Đây là cập nhật theo yêu cầu gom và deploy chung sau khi đã bàn giao preview 1.2.
+
+## Chuyển kiểu
+
+`index.html`, `switcher.css`, `switcher.js` tạo thanh chọn và hai vùng xem. Mặc định lần đầu là Bản gốc. `?style=classic` và `?style=one-line` mở đúng kiểu; lựa chọn được nhớ trên thiết bị nếu localStorage khả dụng. Có thể dùng Tab, Enter, phím trái/phải, Home/End và browser Back/Forward.
+
+Mỗi kiểu chỉ tải khi mở lần đầu, sau đó giữ nguyên trang trong phiên: vị trí cuộn, bộ lọc, dữ liệu demo, form và dialog không reset khi chuyển kiểu. Hai kiểu giữ dữ liệu độc lập để thử/so sánh; reload vẫn trả về dữ liệu demo mẫu như trước. Nội dung, dữ liệu mẫu, font, ảnh và CSS nền dùng chung. Chỉ app/motion của Bản gốc được giữ riêng để bảo toàn choreography.
 
 ## Xem website
 
-**Cách nhanh:** mở `preview.html` bằng Chrome hoặc Edge. Giữ thư mục `assets/` bên cạnh. Bản này gộp CSS và JavaScript, chạy trực tiếp trên máy; sao chép có phương án chọn văn bản nếu trình duyệt hạn chế clipboard.
+**Cách nhanh:** mở `preview.html` bằng Chrome hoặc Edge. Giữ hai file `preview-classic.html`, `preview-one-line.html` và thư mục `assets/` bên cạnh. Các bản này gộp CSS/JavaScript để chạy trực tiếp; cũng có thể mở riêng từng preview. Sao chép có phương án chọn văn bản nếu trình duyệt hạn chế clipboard.
 
 **Để chỉnh sửa:** tại thư mục này chạy `npm run dev`, rồi mở http://127.0.0.1:4173. Không cần cài dependency. Dùng Node.js 18 trở lên. Dừng máy chủ bằng Ctrl+C. Cổng đang dùng: 4173.
 
-Các file nguồn gốc là `index.html`, `content.js`, `demo-state.js`, `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js` và các file CSS. `story.css` chứa typography và bố cục chuyển cảnh. Sau khi sửa, chạy `node build-preview.mjs` để cập nhật `preview.html`. `npm run check` kiểm tra cú pháp và sáu kiểm thử dữ liệu/hình học. `npm run build` chạy kiểm thử rồi tạo bản xem trực tiếp và thư mục tĩnh `dist/`.
+`index.html` là trang chọn; `classic.html` và `one-line.html` là hai trang portfolio. `content.js`, `demo-state.js` dùng chung. `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js`, `story.css` phục vụ Một nét; `classic/app.js`, `classic/effects.js` giữ bản gốc. Sau khi sửa, chạy `npm run build` để kiểm tra cú pháp, sáu kiểm thử dữ liệu/hình học và tạo cả ba preview cùng thư mục tĩnh `dist/`.
 
 ## Chỉnh nội dung
 
@@ -41,7 +47,7 @@ Theme: https://github.com/devoralabsapp/creative-theme-system-skill tại commit
 
 Font được đóng gói từ Google Fonts: Be Vietnam Pro Regular/SemiBold và IBM Plex Mono Regular. Giấy phép SIL OFL trong `assets/OFL-*.txt`. Đồ họa kiến trúc và hình sản phẩm SVG được vẽ riêng cho website; sản phẩm, giá và dữ liệu demo đều hư cấu.
 
-Đọc `MOTION-ONE-LINE.md` và `QA-ONE-LINE.md` cho bản 1.2. `QA.md`, `MOTION.md` và ảnh trong `screenshots/` lưu lịch sử kiểm tra bản 1.1. Video desktop/mobile, dữ liệu kiểm thử bản 1.2 nằm trong thư mục bàn giao cục bộ `../redline-delivery/one-line/`.
+Đọc `QA-SWITCHER.md` cho bản 1.3; `MOTION-ONE-LINE.md` và `QA-ONE-LINE.md` lưu bản 1.2. `QA.md`, `MOTION.md` và ảnh trong `screenshots/` lưu lịch sử bản 1.1. Video desktop/mobile bản 1.2 nằm trong thư mục bàn giao cục bộ `../redline-delivery/one-line/`.
 
 ## Vercel và mã nguồn private
 

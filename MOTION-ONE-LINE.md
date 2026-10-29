@@ -1,5 +1,7 @@
 # Một nét, thành hệ thống — storyboard trước triển khai
 
+> Lịch sử bản 1.2. Từ bản 1.3, theo yêu cầu gom chung, production triển khai bộ chuyển Bản gốc / Một nét. Bản gốc vẫn truy cập được trong cùng website và tag bảo toàn vẫn giữ nguyên. Xem README.md.
+
 ## Giữ lại bản hiện tại
 
 Production https://redline-personal.vercel.app giữ nguyên commit `ccb257e0f04afb133c3966c5b91d30ec05e5d5cc` trên main. Snapshot nguồn: tag `v1.1-current` và bản ZIP riêng `../redline-personal-v1.1-preserved.zip`. Phiên bản này được phát triển trên `motion-one-line`, chỉ đẩy preview; không merge hoặc promote vào production.
