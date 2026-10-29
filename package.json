@@ -1,12 +1,12 @@
 {
   "name": "redline-personal",
-  "version": "1.1.0",
+  "version": "1.3.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
     "start": "node server.mjs",
-    "check": "node --check app.js && node --check effects.js && node --check content.js && node --check server.mjs && node --test tests/*.test.mjs",
+    "check": "node --check switcher.js && node --check classic/app.js && node --check classic/effects.js && node --check app.js && node --check effects.js && node --check story.js && node --check project-motion.js && node --check content.js && node --check server.mjs && node --test tests/*.test.mjs",
     "build": "npm run check && node build-preview.mjs && node build-site.mjs"
   }
 }
