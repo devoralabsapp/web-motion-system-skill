@@ -8,12 +8,12 @@ export function initStory(){
  const canvas=root.querySelector('.story-canvas'),stage=root.querySelector('.story-stage'),plane=root.querySelector('.story-plane');
  const copy=root.querySelector('.story-copy'),wire=root.querySelector('.story-thread'),tracer=root.querySelector('.story-tracer');
  const progressbar=root.querySelector('[role=progressbar]'),caption=root.querySelector('.story-caption');
- const questions=['Có đơn mới.','Kho còn bao nhiêu?','Ai đang xử lý?'];
+ const questions={orders:['Có đơn mới.','Kho còn bao nhiêu?','Ai đang xử lý?'],shop:['Chọn một món.','Thêm một lựa chọn.','Giỏ hàng của bạn.'],internal:['Một yêu cầu mới.','Bao nhiêu việc đang chờ?','Tìm đúng yêu cầu.']};
  const captions=['Công việc còn rời rạc.','Nối công việc thành quy trình.','Một giao diện. Cùng một nguồn dữ liệu.','Sản phẩm thành hình. Mời bạn thao tác.'];
  const media=matchMedia('(max-width: 680px)');
  const reduced=()=>document.documentElement.dataset.motion==='reduced'||matchMedia('(prefers-reduced-motion: reduce)').matches;
  let modules=[],paperHeight=700,travel=1400,canvasHeight=850,frame=0,playFrame=0,override=null,interacted=false,measuring=false;
- let displayed=null,lastTime=0,stageWidth=0,copyHeight=0,active=true,lastPainted=null,lastInteracted=null,introArmed=false,reverseIntentUntil=0,touchY=0;
+ let displayed=null,lastTime=0,stageWidth=0,copyHeight=0,active=true,lastPainted=null,lastInteracted=null,introArmed=false,interactionScrollY=0;
  const wiring=root.querySelector('.story-wiring'),steps=[...root.querySelectorAll('.story-step')];
  wire.setAttribute('pathLength','1');
  let finalFrame={x:0,y:120,width:1200,height:550},divisions=[];
@@ -21,8 +21,10 @@ export function initStory(){
  const getBox=(el,base)=>{const r=el.getBoundingClientRect();return {x:r.x-base.x,y:r.y-base.y,width:r.width,height:r.height,rotation:0};};
  function prepareModules(){
   modules=[];
-  const elements=[stage.querySelector('.order-table tbody tr'),stage.querySelector('.stats'),stage.querySelector('.filter-bar')];
-  elements.forEach((element,i)=>{if(!element)return;element.dataset.storyPiece=String(i);element.dataset.question=questions[i];modules.push({element,index:i});});
+  const mode=stage.querySelector('[data-mode][aria-selected=true]')?.dataset.mode||'orders';
+  const elements=mode==='shop'?[stage.querySelector('.product'),stage.querySelector('.product:nth-child(2)'),stage.querySelector('.cart')]:[stage.querySelector('.order-table tbody tr,.request,.requests .empty'),stage.querySelector('.stats'),stage.querySelector('.filter-bar')];
+  const prompts=questions[mode];
+  elements.forEach((element,i)=>{if(!element)return;element.dataset.storyPiece=String(i);element.dataset.question=prompts[i];modules.push({element,index:i,question:prompts[i]});});
  }
  function currentProgress(){if(reduced()||interacted)return 1;if(override!==null)return override;
   if(media.matches)return range(innerHeight*.82-stage.getBoundingClientRect().top,0,Math.min(innerHeight*.72,560));
@@ -98,7 +100,7 @@ export function initStory(){
   root.style.setProperty('--plane-x',reduced()?'0deg':((1-range(p,.32,.9))*5)+'deg');
   root.style.setProperty('--plane-y',reduced()?'0deg':((1-range(p,.32,.9))*-5)+'deg');
   const rects=[];
-  modules.forEach(m=>{if(!m.end||!m.end.width)return;const question=p>=.9?'':translatePhrase(questions[m.index],getLanguage());if(m.element.dataset.question!==question)m.element.dataset.question=question;const [start,aligned]=sceneRects(m,width),rect=moduleRect(start,aligned,m.end,p);if(document.documentElement.dataset.motionStyle==='orbit'&&p>.16&&p<.43){const arc=Math.sin(range(p,.16,.43)*Math.PI);rect.x+=arc*[30,-25,22][m.index];rect.y-=arc*18;}rects[m.index]=rect;
+  modules.forEach(m=>{if(!m.end||!m.end.width)return;const question=p>=.9?'':translatePhrase(m.question,getLanguage());if(m.element.dataset.question!==question)m.element.dataset.question=question;const [start,aligned]=sceneRects(m,width),rect=moduleRect(start,aligned,m.end,p);if(document.documentElement.dataset.motionStyle==='orbit'&&p>.16&&p<.43){const arc=Math.sin(range(p,.16,.43)*Math.PI);rect.x+=arc*[30,-25,22][m.index];rect.y-=arc*18;}rects[m.index]=rect;
    const sx=rect.width/m.end.width,sy=rect.height/m.end.height;
    m.element.style.transform=`translate3d(${rect.x-m.end.x}px,${rect.y-m.end.y}px,0) rotate(${rect.rotation}deg) scale(${sx},${sy})`;
    m.element.style.setProperty('--inverse-x',1/sx);m.element.style.setProperty('--inverse-y',1/sy);
@@ -116,7 +118,7 @@ export function initStory(){
   if(displayed!==target&&active&&!document.hidden&&!reduced())frame=requestAnimationFrame(paint);
  }
  function schedule(){if(!frame&&active&&!document.hidden)frame=requestAnimationFrame(paint);}
- function lock(){if(interacted)return;interacted=true;override=null;cancelAnimationFrame(playFrame);paint();}
+ function lock(){interactionScrollY=scrollY;if(interacted)return;interacted=true;override=null;cancelAnimationFrame(playFrame);paint();}
  stage.addEventListener('click',e=>{if(e.target.closest('button,select,input,a')&&!e.target.closest('#replay'))lock();},true);
  stage.addEventListener('keydown',e=>{if(e.target.matches('button,select,input,a')&&!e.target.closest('#replay'))lock();},true);
  stage.addEventListener('change',lock,true);
@@ -128,27 +130,26 @@ export function initStory(){
  document.addEventListener('click',e=>{if(e.target.closest('[data-try]'))goToDemo();});
  root.querySelectorAll('[data-story-jump]').forEach(button=>button.addEventListener('click',()=>{const p=Number(button.dataset.storyJump);cancelAnimationFrame(playFrame);override=null;
   interacted=false;
-  if(p<.96&&root.querySelector('[aria-selected=true]')?.dataset.mode!=='orders')document.dispatchEvent(new Event('story:orders'));
   const top=media.matches?stage.getBoundingClientRect().top+scrollY-innerHeight*.82+p*Math.min(innerHeight*.72,560):root.getBoundingClientRect().top+scrollY+travel*p;
   scrollTo({top,behavior:reduced()?'instant':'smooth'});schedule();
  }));
- document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',()=>{interacted=false;override=null;cancelAnimationFrame(playFrame);if(root.querySelector('[aria-selected=true]')?.dataset.mode!=='orders')document.dispatchEvent(new Event('story:orders'));schedule();}));
+ document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',()=>{interacted=false;override=null;cancelAnimationFrame(playFrame);schedule();}));
  document.querySelector('#replay').addEventListener('click',()=>{cancelAnimationFrame(playFrame);interacted=false;
-  document.dispatchEvent(new Event('story:orders'));
   root.classList.remove('intro-replay');void root.offsetWidth;root.classList.add('intro-replay');
   if(reduced()){paint();return;}let start;override=0;
-  function tick(now){start??=now;override=clamp((now-start)/1800);paint();if(override<1)playFrame=requestAnimationFrame(tick);else{interacted=true;override=null;paint();}}
+  function tick(now){start??=now;override=clamp((now-start)/1800);paint();if(override<1)playFrame=requestAnimationFrame(tick);else{interacted=true;interactionScrollY=scrollY;override=null;paint();}}
   playFrame=requestAnimationFrame(tick);
  });
- addEventListener('wheel',event=>{if(event.deltaY<0)reverseIntentUntil=performance.now()+1400;},{passive:true});
- addEventListener('touchstart',event=>{touchY=event.touches[0]?.clientY||0;},{passive:true});
- addEventListener('touchmove',event=>{const next=event.touches[0]?.clientY||0;if(next>touchY)reverseIntentUntil=performance.now()+1400;touchY=next;},{passive:true});
- addEventListener('keydown',event=>{if(['PageUp','ArrowUp','Home'].includes(event.key)||(event.key===' '&&event.shiftKey))reverseIntentUntil=performance.now()+1400;});
  addEventListener('scroll',()=>{
   if(override!==null){cancelAnimationFrame(playFrame);override=null;}
   const raw=media.matches?range(innerHeight*.82-stage.getBoundingClientRect().top,0,Math.min(innerHeight*.72,560)):scrollProgress(root.getBoundingClientRect().top,travel);
   if(raw>.45)introArmed=true;
-  if(interacted&&raw<.2&&performance.now()<reverseIntentUntil){interacted=false;lastPainted=null;if(root.querySelector('[aria-selected=true]')?.dataset.mode!=='orders')document.dispatchEvent(new Event('story:orders'));}
+  // Unlock on actual reverse travel, including scrollbar/keyboard scrolling.
+  // A new render, a filter, or focus alone must never restart the story.
+  if(interacted){
+   interactionScrollY=Math.max(interactionScrollY,scrollY);
+   if(interactionScrollY-scrollY>=48&&raw<.96){interacted=false;lastPainted=null;}
+  }
   if(raw<.04&&introArmed&&!reduced()){introArmed=false;root.classList.remove('intro-replay');void root.offsetWidth;root.classList.add('intro-replay');}
   schedule();
  },{passive:true});

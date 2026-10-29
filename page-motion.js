@@ -38,26 +38,35 @@ export function initPageMotion(){
  const railStops=[...rail.querySelectorAll('a')],process=document.querySelector('.process-list'),processSteps=[...process.children],projectCards=[...document.querySelectorAll('.project-record')];
  function reveal(unit){if(!active)return;if(!unit.classList.contains('motion-shown')){unit.dataset.motionRuns=String(Number(unit.dataset.motionRuns||0)+1);unit.classList.add('motion-shown');}}
  function rearm(unit,rect=unit.getBoundingClientRect()){
-  if(!active||reduced()||unit.querySelector('input:focus,textarea:focus,select:focus'))return;
-  if(rect.bottom<-100||rect.top>innerHeight+100)unit.classList.remove('motion-shown','motion-settled');
+  if(!active||reduced())return;
+  if(rect.bottom<-24||rect.top>innerHeight+24)unit.classList.remove('motion-shown','motion-settled');
  }
- const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting)reveal(entry.target);},{threshold:.06,rootMargin:'0px 0px -28px'});
- const resetObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(!entry.isIntersecting)rearm(entry.target,entry.boundingClientRect);},{threshold:0,rootMargin:'110px 0px'});
+ // Read all positions together on every scroll. This also reconciles units
+ // skipped by IntersectionObserver while their style tab was inactive.
+ function syncReveals(measurements){
+  if(reduced())return;
+  for(const {unit,rect} of measurements){
+   if(rect.bottom<-24||rect.top>innerHeight+24)rearm(unit,rect);
+   else if(rect.bottom>0&&rect.top<innerHeight-28)reveal(unit);
+  }
+ }
  const sectionObserver=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}schedule();},{rootMargin:'120px'});
  sections.forEach(section=>sectionObserver.observe(section));
  const showEverything=()=>{units.forEach(unit=>unit.classList.add('motion-shown','motion-settled'));};
- if(reduced())showEverything();units.forEach(unit=>{observer.observe(unit);resetObserver.observe(unit);});
+ if(reduced())showEverything();
  html.classList.add('page-motion');
  document.addEventListener('focusin',event=>{const unit=event.target.closest('.motion-unit');if(unit)unit.classList.add('motion-shown','motion-settled');});
- document.addEventListener('focusout',event=>{const unit=event.target.closest('.motion-unit');if(unit)queueMicrotask(()=>rearm(unit));});
+ document.addEventListener('focusout',event=>{const unit=event.target.closest('.motion-unit');if(unit)queueMicrotask(()=>{rearm(unit);schedule();});});
  // All geometry reads precede writes; rAF runs only while scrolling or settling.
  function update(now){frame=0;if(!active||document.hidden)return;
   const delta=Math.min(48,now-lastTime||16);lastTime=now;const staticMode=reduced(),vh=innerHeight;
   const maxScroll=Math.max(1,document.documentElement.scrollHeight-vh),target=clamp(scrollY/maxScroll);
   pageProgress=staticMode?target:followProgress(pageProgress,target,delta,55);
+  const unitRects=units.map(unit=>({unit,rect:unit.getBoundingClientRect()}));
   const measurements=sections.map(section=>({section,rect:section.getBoundingClientRect()}));
   const processBox=process.getBoundingClientRect(),steps=processSteps.map(el=>({el,top:el.getBoundingClientRect().top}));
   const cards=projectCards.filter(el=>visible.has(el.closest('.motion-section'))).map(el=>({el,rect:el.getBoundingClientRect()}));
+  syncReveals(unitRects);
   rail.style.setProperty('--reading-progress',pageProgress);topLine.style.setProperty('--reading-progress',pageProgress);let chapter=1;
   for(const {section,rect} of measurements){if(rect.top<vh*.48)chapter=Number(section.dataset.chapter);
    if(visible.has(section)||staticMode){const draw=String(staticMode?1:range(vh-rect.top,0,vh*.8));if(section.style.getPropertyValue('--chapter-draw')!==draw)section.style.setProperty('--chapter-draw',draw);}

@@ -1,12 +1,16 @@
 {
   "name": "redline-personal",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
     "start": "node server.mjs",
     "check": "node --check i18n.js && node --check i18n-text.js && node --check motion-profiles.js && node --check page-motion.js && node --check switcher.js && node --check classic/app.js && node --check classic/effects.js && node --check app.js && node --check effects.js && node --check story.js && node --check project-motion.js && node --check content.js && node --check server.mjs && node --test tests/*.test.mjs",
-    "build": "npm run check && node build-preview.mjs && node build-site.mjs"
+    "build": "npm run check && node build-preview.mjs && node build-site.mjs",
+    "test:browser": "node tests/browser-replay.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
   }
 }

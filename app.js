@@ -58,7 +58,6 @@ form.addEventListener('submit',e=>{e.preventDefault();const invalid=formFields.f
 $('#copy-brief').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('#brief-output').value);$('#copy-status').textContent='Đã sao chép brief. Bạn có thể dán vào kênh liên hệ đã chọn.';}catch{$('#brief-output').focus();$('#brief-output').select();$('#copy-status').textContent='Trình duyệt chưa cho phép sao chép. Brief đã được chọn; dùng Ctrl+C hoặc thao tác Sao chép trên điện thoại.';}});
 $('#download-brief').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob(['\uFEFF'+$('#brief-output').value],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=getLanguage()==='en'?'web-app-project-brief.txt':'brief-du-an-web-app.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);$('#copy-status').textContent='Đã chuẩn bị tệp brief để tải xuống. Chưa gửi đến người nhận.';});
 const tabInk=document.createElement('span');tabInk.className='tab-ink';tabInk.setAttribute('aria-hidden','true');$('.demo-tabs').append(tabInk);
-document.addEventListener('story:orders',()=>setMode('orders'));
 refreshLanguage();
 document.addEventListener('language:change',()=>{renderDemo();refreshLanguage();});
 initMotion();
