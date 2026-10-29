@@ -5,7 +5,7 @@ export const styles=[
  {id:'classic',label:'Bản gốc',title:'Portfolio DevoraLabs — Bản gốc',url:'classic.html'},
  {id:'one-line',label:'Một nét, thành hệ thống',title:'Portfolio DevoraLabs — Một nét, thành hệ thống',url:'one-line.html'},
  ...[{id:'kinetic',label:'Chữ động'},{id:'layers',label:'Xếp lớp'},{id:'blueprint',label:'Bản vẽ'},{id:'orbit',label:'Quỹ đạo'}].map(style=>({...style,title:'Portfolio DevoraLabs — '+style.label,url:'one-line.html',variant:style.id}))
- ,{id:'creative-lab',label:'Creative Lab · Web mới',title:'DevoraLabs — Creative Lab',url:'creative.html?v=process-stable-2'}
+ ,{id:'creative-lab',label:'Creative Lab · Web mới',title:'DevoraLabs — Creative Lab',url:'creative.html?v=process-motion-3'}
 ];
 initI18n();
 const picker=document.createElement('select');picker.id='website-picker';picker.setAttribute('aria-label','Chọn kiểu Web 1');
