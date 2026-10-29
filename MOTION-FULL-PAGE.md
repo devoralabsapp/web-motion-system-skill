@@ -1,5 +1,7 @@
 # Một nét — chuyển động toàn trang / 1.4
 
+> Lịch sử 1.4. Từ 1.5, animation phát lại khi cuộn trở về. Xem LANGUAGES-AND-STYLES.md.
+
 ## Choreography
 
 - **Hero:** chuyển động theo cuộn có bộ bám thời gian 58–72ms, giới hạn độ trễ 14% để cuộn nhanh vẫn theo kịp. Nhấn các nút cảnh đi qua morph thay vì chốt ngay hình học cuối. Thao tác demo đầu tiên vẫn khóa hình học, không reset dữ liệu.

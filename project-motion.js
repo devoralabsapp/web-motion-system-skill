@@ -22,4 +22,5 @@ export function runProjectMotion(dialog,source,target){
  dialog.addEventListener('scroll',cancelProjectMotion,{once:true});
 }
 addEventListener('resize',cancelProjectMotion,{passive:true});
+document.addEventListener('language:change',cancelProjectMotion);
 document.addEventListener('motion:change',()=>{if(prefersStatic())cancelProjectMotion();});
