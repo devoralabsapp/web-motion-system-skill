@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Motion System Skill"
+  short_description: "240 GIF motion recipes plus all Web 1/Web 2 styles"
+  default_prompt: "Use $web-motion-system-skill to select a numbered motion recipe and GIF, or a Web 1/Web 2 direction, and implement it with stable replay, preserved state and reduced-motion support."

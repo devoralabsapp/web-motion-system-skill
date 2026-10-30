@@ -1,7 +1,7 @@
 import {createServer} from 'node:http';import {readFile,writeFile,mkdir} from 'node:fs/promises';import {spawn} from 'node:child_process';import {once} from 'node:events';import {createHash} from 'node:crypto';import {createRequire} from 'node:module';import path from 'node:path';import {fileURLToPath} from 'node:url';
-import {effects} from '../skills/devoralabs-web-motion/assets/catalog/registry.mjs';
+import {effects} from '../skills/web-motion-system-skill/assets/catalog/registry.mjs';
 const require=createRequire(import.meta.url),{chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const skill=fileURLToPath(new URL('../skills/devoralabs-web-motion/',import.meta.url)),catalog=path.join(skill,'assets','catalog'),out=path.join(skill,'assets','gifs');await mkdir(out,{recursive:true});
+const skill=fileURLToPath(new URL('../skills/web-motion-system-skill/',import.meta.url)),catalog=path.join(skill,'assets','catalog'),out=path.join(skill,'assets','gifs');await mkdir(out,{recursive:true});
 const sha=x=>createHash('sha256').update(x).digest('hex');const engine=await readFile(path.join(catalog,'demo-engine.mjs')),registry=await readFile(path.join(catalog,'registry.mjs'));const rendererSha=sha(Buffer.concat([engine,registry]).toString('utf8').replace(/\r\n/g,'\n'));
 const ids=process.argv.find(x=>x.startsWith('--ids='))?.slice(6).split(',').map(Number);const selected=ids?effects.filter(e=>ids.includes(e.id)):effects;
 const fps=12,frames=36;let previous={entries:[]};try{previous=JSON.parse(await readFile(path.join(catalog,'render-manifest.json'),'utf8'))}catch{}

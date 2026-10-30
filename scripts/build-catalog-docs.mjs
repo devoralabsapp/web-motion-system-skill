@@ -1,5 +1,5 @@
 import {mkdir,writeFile} from 'node:fs/promises';
-import {effects,groupNames} from '../skills/devoralabs-web-motion/assets/catalog/registry.mjs';
+import {effects,groupNames} from '../skills/web-motion-system-skill/assets/catalog/registry.mjs';
 function timingNote(e){
  if(e.kind!=='effect')return 'compose this controller with a selected visual property; it does not determine the visual design by itself.';
  if(e.group===9||e.group===15||e.id===216)return 'map actual scroll, pointer or drag progress to the visual range; use a short bounded follower only when needed. No fixed autoplay duration is required.';
@@ -10,7 +10,7 @@ function timingNote(e){
  if(e.group===18)return 'use a bounded simulation loop while visible, with a finite end or explicit pause policy; do not run decorative particle work in hidden views.';
  return 'start around '+e.durationMs+'ms for a discrete transition; ongoing indicators follow real activity and stop when it ends. The 3-second teaching GIF is not a required production duration.';
 }
-const root=new URL('../skills/devoralabs-web-motion/',import.meta.url);
+const root=new URL('../skills/web-motion-system-skill/',import.meta.url);
 await mkdir(new URL('references/catalog/',root),{recursive:true});
 const index=['# Motion catalog — 240 entries','','220 visual effects/patterns + 10 input triggers + 10 timing modes. IDs follow the original requested list. Variants can overlap; these are not 240 mutually exclusive industry standards.','','Each GIF is a deterministic Canvas study, not a recording of a production website. The interactive input, shader and 3D limits are labeled per group. A looping GIF shows repetition for teaching; production replay follows the user task and reduced-motion preference.','','[Open the searchable gallery](../assets/catalog/gallery.html) through a local HTTP server. On GitHub, open a group below to view its ten GIFs.',''];
 for(let g=0;g<24;g++){

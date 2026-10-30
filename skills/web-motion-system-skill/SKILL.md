@@ -1,9 +1,9 @@
 ---
-name: devoralabs-web-motion
+name: web-motion-system-skill
 description: Implement or adapt 240 numbered motion studies with individual GIF demos and recipes, plus DevoraLabs Web 1's six and Web 2's three motion styles. Use for typography, SVG, scroll, layout, UI, physics, particles, cinematic, product motion, triggers and easing; debug replay, flicker and cache while preserving app state and reduced motion.
 ---
 
-# DevoraLabs Web Motion
+# Web Motion System Skill
 
 Build selected motion from the **240-item GIF catalog** or the visual language of **Web 1 and Web 2**, adapted to the host. This is not authorization to rebuild content, add every effect, publish, or change another website in the project.
 

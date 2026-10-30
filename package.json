@@ -1,16 +1,19 @@
 {
-  "name": "devoralabs-web-motion",
-  "version": "2.0.0",
+  "name": "web-motion-system-skill",
+  "version": "2.1.0",
   "private": true,
   "type": "module",
-  "description": "Agent skill with 240 GIF motion studies and nine original DevoraLabs website styles",
+  "description": "Motion Explorer web app and reusable agent skill with 240 motion recipes, live demos and GIFs",
   "scripts": {
-    "test": "node scripts/verify-catalog.mjs && node skills/devoralabs-web-motion/scripts/verify-reveal.mjs && node scripts/verify-gallery.mjs",
+    "test": "node scripts/verify-catalog.mjs && node skills/web-motion-system-skill/scripts/verify-reveal.mjs && node scripts/verify-gallery.mjs",
     "catalog:docs": "node scripts/build-catalog-docs.mjs",
     "catalog:gifs": "node scripts/render-catalog-gifs.mjs",
     "catalog:verify": "node scripts/verify-catalog.mjs",
     "catalog:preview": "node scripts/preview-catalog.mjs",
-    "catalog:verify-gallery": "node scripts/verify-gallery.mjs"
+    "catalog:verify-gallery": "node scripts/verify-gallery.mjs",
+    "build": "node scripts/build-explorer.mjs",
+    "dev": "node scripts/build-explorer.mjs && node scripts/preview-explorer.mjs",
+    "explorer:verify": "node scripts/verify-explorer.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

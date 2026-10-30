@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {effects} from '../skills/web-motion-system-skill/assets/catalog/registry.mjs';
+const {chromium}=createRequire(import.meta.url)('playwright');
+const base=process.env.BASE_URL||'http://127.0.0.1:4190';
+const out=new URL('../../redline-delivery/motion-catalog/',import.meta.url);await mkdir(out,{recursive:true});
+const browser=await chromium.launch({headless:true,channel:process.env.BROWSER_CHANNEL||'chrome'});
+const results=[],errors=[],failed=[];
+async function status(page){return page.evaluate(async()=>{const m=await import('/app.js');return m.getRuntimeStatus()})}
+async function noOverflow(page){assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'no horizontal overflow');}
+function watch(page){page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)failed.push({url:r.url(),status:r.status()})});}
+try{
+ const context=await browser.newContext({viewport:{width:1440,height:1050},reducedMotion:'no-preference',permissions:['clipboard-read','clipboard-write']});
+ const page=await context.newPage();watch(page);await page.goto(base);await page.waitForFunction(()=>document.querySelectorAll('.motion-card').length===240);await page.waitForTimeout(1100);
+ await noOverflow(page);assert.equal(await page.locator('.motion-group').count(),24);assert.ok((await status(page)).active<=6);await page.screenshot({path:new URL('explorer-desktop.png',out).pathname.replace(/^\/([A-Z]:)/i,'$1')});
+ await page.locator('[data-save-id="1"]').click();assert.equal(await page.locator('#saved-count').textContent(),'1');
+ await page.locator('#search').fill('073');await page.waitForFunction(()=>document.querySelectorAll('.motion-card').length===1);assert.equal(await page.locator('.motion-card').getAttribute('data-motion-id'),'73');
+ const play=page.locator('.preview-play'),canvas=page.locator('.preview canvas');await play.click();const paused=await canvas.evaluate(c=>c.toDataURL());await page.waitForTimeout(180);assert.equal(await canvas.evaluate(c=>c.toDataURL()),paused,'paused canvas is stable');
+ await play.click();await page.waitForTimeout(130);const before=await canvas.evaluate(c=>c.toDataURL());await page.waitForTimeout(370);assert.notEqual(await canvas.evaluate(c=>c.toDataURL()),before,'visible preview really changes');
+ await page.locator('.card-title-row a').click();await page.waitForFunction(()=>document.querySelector('#lab-title').textContent==='Path tracer');await page.getByRole('button',{name:'Copy agent prompt'}).click();assert.match(await page.evaluate(()=>navigator.clipboard.readText()),/073 \/ Path tracer/);
+ await page.locator('#save-lab').click();assert.equal(await page.locator('#save-lab').getAttribute('aria-pressed'),'true');
+ await page.locator('#format-gif').click();await page.waitForFunction(()=>document.querySelector('#lab-gif').complete&&document.querySelector('#lab-gif').naturalWidth===400);assert.equal((await page.request.get(new URL(await page.locator('#download-gif').getAttribute('href'),base).href)).status(),200);await page.locator('#format-live').click();
+ for(const e of effects){await page.locator('#motion-select').selectOption(String(e.id));await page.waitForFunction(id=>document.querySelector('#lab-id').textContent===String(id).padStart(3,'0')+' / 240',e.id);
+  const frames=await page.evaluate(()=>{const range=document.querySelector('#scrub'),canvas=document.querySelector('#lab-canvas');range.value='170';range.dispatchEvent(new Event('input'));const a=canvas.toDataURL();range.value='610';range.dispatchEvent(new Event('input'));return [a,canvas.toDataURL()]});assert.notEqual(frames[0],frames[1],e.key+' has visible motion');
+  if(e.id%40===0)console.log(`Verified live study ${e.id}/240`);
+ }
+ results.push({desktop:true,categories:24,motions:240,allLiveStudiesChange:true,search:true,saved:true,copyPrompt:true,gif:true,scrub:true});
+ await page.locator('[data-view="practice"]').click();await page.waitForFunction(()=>!document.querySelector('#view-practice').hidden);await page.locator('.task input').first().check();await page.waitForFunction(()=>document.querySelector('#completed-count').textContent==='1');
+ await page.locator('#task-filter').selectOption('Build');assert.equal(await page.locator('.task:visible').count(),3);await page.locator('.task:visible input').first().check();await page.waitForFunction(()=>document.querySelector('#completed-count').textContent==='2');
+ await page.locator('#task-sort').selectOption('complete');assert.equal(await page.locator('.task:visible input').last().isChecked(),true);await page.locator('#quiet-toggle').click();assert.equal(await page.locator('#quiet-toggle').getAttribute('aria-checked'),'true');
+ await page.locator('#activity-tab').click();assert.equal(await page.locator('#activity-log .activity-row').count(),2);await page.locator('#tasks-tab').click();await page.getByRole('button',{name:'What about reduced motion?'}).click();await page.waitForTimeout(350);assert.equal(await page.locator('#answer-two').isVisible(),true);
+ await page.screenshot({path:new URL('explorer-practice.png',out).pathname.replace(/^\/([A-Z]:)/i,'$1'),fullPage:true});await noOverflow(page);
+ await page.locator('[data-view="lab"]').click();await page.locator('[data-view="practice"]').click();assert.equal(await page.locator('.task input:checked').count(),2);assert.equal(await page.locator('#task-filter').inputValue(),'Build');assert.equal(await page.locator('#quiet-toggle').getAttribute('aria-checked'),'true');
+ await page.locator('#motion-toggle').click();await page.waitForTimeout(100);assert.equal(await page.evaluate(()=>document.documentElement.dataset.reduced),'true');assert.equal((await status(page)).active,0);await page.locator('#motion-toggle').click();
+ results.push({practice:true,taskStatePreserved:true,filter:true,sort:true,tabs:true,toggle:true,accordion:true,globalPause:true});
+ await page.locator('[data-view="all"]').click();assert.equal(await page.locator('#search').inputValue(),'073');await page.locator('#search').fill('');await page.waitForFunction(()=>document.querySelectorAll('.motion-card').length===240);await page.locator('#category').selectOption('24');await page.waitForFunction(()=>document.querySelectorAll('.motion-card').length===10);assert.match(await page.locator('.group-title h2').textContent(),/Timing/);await page.locator('#category').selectOption('');
+ await page.locator('#saved-filter').click();await page.waitForFunction(()=>document.querySelectorAll('.motion-card').length===2);await page.reload();await page.waitForFunction(()=>document.querySelectorAll('.motion-card').length===2);assert.equal(await page.locator('#saved-count').textContent(),'2');
+ await page.goto(base+'/#view=lab&motion=180');await page.waitForFunction(()=>document.querySelector('#lab-title').textContent==='Particle text formation');await page.waitForTimeout(600);await page.screenshot({path:new URL('explorer-lab.png',out).pathname.replace(/^\/([A-Z]:)/i,'$1')});
+ await context.close();
+ const mobile=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});const phone=await mobile.newPage();watch(phone);await phone.goto(base);await phone.waitForFunction(()=>document.querySelectorAll('.motion-card').length===240);await phone.waitForTimeout(150);assert.equal(await phone.locator('#motion-notice').isVisible(),true);assert.equal((await status(phone)).active,0);assert.equal((await status(phone)).raf,false);await noOverflow(phone);await phone.screenshot({path:new URL('explorer-mobile.png',out).pathname.replace(/^\/([A-Z]:)/i,'$1'),fullPage:false});
+ await phone.locator('.preview-play').first().click();await phone.waitForTimeout(150);assert.equal((await status(phone)).active,1,'explicit reduced-motion demo play works');await phone.locator('.preview-play').first().click();await phone.waitForTimeout(100);assert.equal((await status(phone)).active,0);
+ await phone.locator('[data-view="lab"]').click();await phone.waitForFunction(()=>!document.querySelector('#view-lab').hidden);assert.equal(await phone.locator('#lab-play').textContent(),'Play');await phone.locator('#lab-replay').click();await phone.waitForTimeout(100);assert.equal((await status(phone)).active,1);await noOverflow(phone);await phone.screenshot({path:new URL('explorer-mobile-lab.png',out).pathname.replace(/^\/([A-Z]:)/i,'$1'),fullPage:true});
+ await phone.locator('[data-view="practice"]').click();await phone.waitForFunction(()=>!document.querySelector('#view-practice').hidden);await phone.locator('.task input').first().check();assert.equal(await phone.locator('#completed-count').textContent(),'1');await noOverflow(phone);await phone.waitForTimeout(80);assert.equal((await status(phone)).active,0);await phone.screenshot({path:new URL('explorer-mobile-practice.png',out).pathname.replace(/^\/([A-Z]:)/i,'$1'),fullPage:true});
+ results.push({mobile:true,width:390,osReducedMotion:true,notice:true,noAutoplay:true,manualPlayback:true,controlsWork:true,noOverflow:true});await mobile.close();
+ assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);const report={passed:true,base,results,consoleErrors:errors,failedRequests:failed};await writeFile(new URL('explorer-verification.json',out),JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+}finally{await browser.close();}

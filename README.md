@@ -1,12 +1,52 @@
-# DevoraLabs Web Motion
+# Web Motion System Skill
 
 Skill để AI agent học và triển khai **240 mục motion có GIF demo riêng**, cùng **6 kiểu Web 1 + 3 kiểu Web 2**, giữ dữ liệu, phát lại khi cuộn và tránh nháy lặp.
 
-Skill chính: [SKILL.md](skills/devoralabs-web-motion/SKILL.md). Tài liệu kỹ thuật viết bằng tiếng Anh để nhiều agent sử dụng; ví dụ và nội dung tiếng Việt được giữ nguyên.
+Skill chính: [SKILL.md](skills/web-motion-system-skill/SKILL.md). Tài liệu kỹ thuật viết bằng tiếng Anh để nhiều agent sử dụng; ví dụ và nội dung tiếng Việt được giữ nguyên.
+
+## Motion Explorer web app
+
+**Every motion. All in one place.** Web app nằm trong cùng repo, dùng chung 240 renderer và bộ GIF của skill.
+
+- **All motions:** đủ 240 mục / 24 nhóm, tìm ID/tên/tiếng Việt, lọc collection/category, lưu mục yêu thích trên trình duyệt.
+- **Motion Lab:** demo Canvas chạy trực tiếp, play/pause/replay, tua timeline, chỉnh tốc độ, GIF gốc, tải GIF và chép prompt cho agent.
+- **In practice:** giao diện thao tác được với reveal ổn định, SVG draw, pointer tilt, magnetic text, FLIP khi lọc/sắp xếp, checkbox draw, count-up, progress, tab, toggle và accordion. State giữ nguyên khi đổi màn hình.
+- Chỉ chạy tối đa 6 preview trong viewport; ngừng khi tab bị ẩn. Reduced motion tắt autoplay và hiệu ứng trang; người dùng vẫn có thể chủ động phát riêng một demo. Có thông báo khi thiết bị yêu cầu giảm chuyển động.
+- Demo 3D/shader là mô phỏng Canvas 2D; input/audio/data minh họa được ghi rõ. Đây không phải thư viện renderer 3D sản xuất.
+
+### Chạy trên máy
+
+```sh
+npm ci
+npm run dev
+```
+
+Mở địa chỉ Local được in ra (mặc định cổng 4190). Build tĩnh bằng `npm run build`, output ở `dist/`. Không cần backend hay biến môi trường để chạy app.
+
+### Tự deploy trên Vercel
+
+1. Import repo `devoralabsapp/web-motion-system-skill` trong team Vercel của bạn.
+2. Chọn **Root Directory: ./**, **Framework Preset: Other**.
+3. **Build Command:** `npm run build`; **Output Directory:** `dist`; **Install Command:** `npm ci`. Dùng Node.js 24.x.
+4. Deploy. File `vercel.json` đã khai báo build/output và các header cho static app. Các lần push tiếp theo có thể deploy qua Git integration của Vercel.
+
+URL chia sẻ dùng hash: `/#view=lab&motion=073`, `/#view=practice`, `/#view=all&category=18`. Repo vẫn private; app build chỉ công bố thư viện demo và các recipe ngắn, không chép toàn bộ snapshot mã của Web 1/Web 2 vào output.
+
+### Kiểm tra app
+
+Sau khi server local đã chạy, mở terminal khác:
+
+```sh
+npm run explorer:verify
+```
+
+Script Chrome/Playwright kiểm tra thay đổi khung hình của đủ 240 demo live, tìm kiếm/lưu mục, GIF, timeline, clipboard, state của workspace và reduced motion ở desktop/mobile. Có thể đặt `BASE_URL` để kiểm tra một deployment bạn quản lý. Báo cáo và ảnh QA lưu ngoài repo tại `../redline-delivery/motion-catalog/`.
+
+Tên skill đã đổi thành **`$web-motion-system-skill`**. Nếu đã cài bản cũ, đổi/cập nhật thư mục skill thay vì giữ hai bản trùng nội dung.
 
 ## Danh mục 240 GIF
 
-**[Mở danh mục 240 mục](skills/devoralabs-web-motion/references/catalog.md)** — chọn nhóm để xem 10 GIF cùng lúc, hoặc mở từng recipe. Mỗi mục có ID ổn định, GIF, mô tả tiếng Việt, cách triển khai, thời gian khởi điểm và điều kiện kiểm thử.
+**[Mở danh mục 240 mục](skills/web-motion-system-skill/references/catalog.md)** — chọn nhóm để xem 10 GIF cùng lúc, hoặc mở từng recipe. Mỗi mục có ID ổn định, GIF, mô tả tiếng Việt, cách triển khai, thời gian khởi điểm và điều kiện kiểm thử.
 
 | Phạm vi | Nội dung |
 | --- | --- |
@@ -21,7 +61,7 @@ GIF là nghiên cứu minh họa bằng code, không phải video quay website. 
 ### Gọi một mục cụ thể
 
 ```text
-Dùng $devoralabs-web-motion, mục 073 / Path tracer.
+Dùng $web-motion-system-skill, mục 073 / Path tracer.
 Đọc recipe và GIF tham khảo, rồi áp dụng vào sơ đồ quy trình của trang này.
 Giữ dữ liệu, focus và reduced motion; không sửa section khác.
 ```
@@ -73,7 +113,7 @@ Gửi cho Codex:
 
 ```text
 Dùng $skill-installer để cài skill từ:
-https://github.com/devoralabsapp/devoralabs-web-motion/tree/main/skills/devoralabs-web-motion
+https://github.com/devoralabsapp/web-motion-system-skill/tree/main/skills/web-motion-system-skill
 ```
 
 Nếu skill đã tồn tại, installer sẽ không tự ghi đè. Hãy yêu cầu agent kiểm tra phiên bản hiện có rồi cập nhật có chủ đích.
@@ -83,16 +123,16 @@ Sau khi cài thành công, skill có thể được gọi ở lượt tiếp the
 ### Cách 2: tải repo và chép thư mục skill
 
 ```sh
-git clone https://github.com/devoralabsapp/devoralabs-web-motion.git
+git clone https://github.com/devoralabsapp/web-motion-system-skill.git
 ```
 
-Chép **nguyên thư mục** `skills/devoralabs-web-motion/` vào `$CODEX_HOME/skills/`. Nếu không đặt `CODEX_HOME`, dùng `~/.codex/skills/`.
+Chép **nguyên thư mục** `skills/web-motion-system-skill/` vào `$CODEX_HOME/skills/`. Nếu không đặt `CODEX_HOME`, dùng `~/.codex/skills/`.
 
 Cấu trúc sau khi cài phải là:
 
 ```text
 <thư mục skills>/
-└── devoralabs-web-motion/
+└── web-motion-system-skill/
     ├── SKILL.md
     ├── agents/openai.yaml
     ├── references/
@@ -104,12 +144,12 @@ Không chỉ chép riêng `SKILL.md`: agent còn cần tài liệu và mã tham 
 
 ## Cách dùng
 
-Trong Codex, gọi bằng `$devoralabs-web-motion`. Cho agent biết kiểu cần làm, trang cần áp dụng và phần phải giữ nguyên.
+Trong Codex, gọi bằng `$web-motion-system-skill`. Cho agent biết kiểu cần làm, trang cần áp dụng và phần phải giữ nguyên.
 
 ### Web 1: Một nét thành giao diện thật
 
 ```text
-Dùng $devoralabs-web-motion, kiểu Web 1 / one-line.
+Dùng $web-motion-system-skill, kiểu Web 1 / one-line.
 Làm hero chuyển từ ba tác vụ rời rạc thành dashboard đang có.
 Dùng đúng các module HTML của demo, không tạo hai bộ dữ liệu.
 Giữ bộ lọc, giỏ hàng, tab demo và form khi cuộn hoặc replay.
@@ -119,7 +159,7 @@ Kiểm tra cuộn ngược sau khi đã thao tác demo trên desktop/mobile.
 ### Web 1: chỉ đổi phong cách chuyển động
 
 ```text
-Dùng $devoralabs-web-motion để áp dụng kiểu kinetic cho trang này.
+Dùng $web-motion-system-skill để áp dụng kiểu kinetic cho trang này.
 Giữ nội dung và chức năng. Thay motion của headline, preview dự án
 và các section theo nhịp chuyển động ngang; giữ dấu tiếng Việt.
 ```
@@ -127,7 +167,7 @@ và các section theo nhịp chuyển động ngang; giữ dấu tiếng Việt.
 ### Web 2: đủ ba hướng
 
 ```text
-Dùng $devoralabs-web-motion cho Web 2 với frame-shift,
+Dùng $web-motion-system-skill cho Web 2 với frame-shift,
 cobalt-court và cutout-dept. Mỗi kiểu cần composition và motion riêng.
 Giữ dữ liệu dùng chung khi đổi kiểu. Bốn bước quy trình vẫn chuyển động,
 nhưng không tự chạy lặp khi đứng yên hoặc cuộn nhẹ ở mép màn hình.
@@ -137,7 +177,7 @@ Không sửa Web 1. Chạy thử và báo rõ những môi trường đã kiểm
 ### Sửa lỗi nháy hoặc nghi ngờ cache
 
 ```text
-Dùng $devoralabs-web-motion để kiểm tra section này bị nháy trên Windows.
+Dùng $web-motion-system-skill để kiểm tra section này bị nháy trên Windows.
 Đối chiếu prefers-reduced-motion, trigger geometry và file đang tải thật.
 Đo clip/transform ở giữa animation và trạng thái sau khi kết thúc.
 Giữ chuyển động theo thiết kế, không chuyển cả section sang tĩnh.
@@ -149,7 +189,7 @@ Kiểm tra tải lại với cache còn nguyên; không mặc định cache là 
 Clone repo rồi yêu cầu agent đọc entrypoint theo đường dẫn thực tế:
 
 ```text
-Đọc skills/devoralabs-web-motion/SKILL.md và dùng nó làm hướng dẫn
+Đọc skills/web-motion-system-skill/SKILL.md và dùng nó làm hướng dẫn
 cho tác vụ này. Áp dụng Web 1 / blueprint vào trang dự án đang mở.
 Chỉ đọc các reference liên quan, giữ nguyên state và chức năng hiện có.
 ```
@@ -158,10 +198,10 @@ Agent không hỗ trợ cú pháp `$skill` vẫn có thể đọc Markdown và m
 
 ## Bên trong skill
 
-- [Web 1](skills/devoralabs-web-motion/references/web1.md): storyboard, FLIP, SVG morph, 6 kiểu và reverse replay.
-- [Web 2](skills/devoralabs-web-motion/references/web2.md): 3 kiểu Creative Lab và bốn bước có trigger ổn định.
-- [Độ ổn định](skills/devoralabs-web-motion/references/reliability.md): nháy lặp, reduced motion, Windows/macOS, cache và kiểm thử.
-- [Stable reveal](skills/devoralabs-web-motion/assets/stable-reveal.mjs): helper có thể tích hợp, không phụ thuộc framework.
+- [Web 1](skills/web-motion-system-skill/references/web1.md): storyboard, FLIP, SVG morph, 6 kiểu và reverse replay.
+- [Web 2](skills/web-motion-system-skill/references/web2.md): 3 kiểu Creative Lab và bốn bước có trigger ổn định.
+- [Độ ổn định](skills/web-motion-system-skill/references/reliability.md): nháy lặp, reduced motion, Windows/macOS, cache và kiểm thử.
+- [Stable reveal](skills/web-motion-system-skill/assets/stable-reveal.mjs): helper có thể tích hợp, không phụ thuộc framework.
 - `assets/source/`: snapshot các engine motion gốc của hai web. Đây là mã học cách triển khai, phụ thuộc DOM của website gốc, không phải template website chạy độc lập.
 
 ## Kiểm thử catalog và helper
