@@ -7,7 +7,7 @@ const base=process.env.BASE_URL||'http://127.0.0.1:4190',out=new URL('../../redl
 const browser=await chromium.launch({headless:true,channel:process.env.BROWSER_CHANNEL||'chrome'}),errors=[],failures=[],results=[];
 function watch(page){page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)failures.push({url:r.url(),status:r.status()})});}
 function frame(page,key){return page.frameLocator('#portfolio-'+key)}
-async function ready(page,key){await frame(page,key).locator('#demo-panel').waitFor();await frame(page,key).locator('h1').waitFor();}
+async function ready(page,key){await page.waitForFunction(key=>{const d=document.getElementById('portfolio-'+key)?.contentDocument;return d?.readyState==='complete'&&d.querySelector('#demo-panel')?.children.length>0},key);await frame(page,key).locator('h1').waitFor();}
 try{
  const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});watch(page);await page.goto(base+'/#view=demo1');await ready(page,'one-line');
  assert.deepEqual(await page.locator('.main-nav a').allTextContents(),['All motions','Motion Lab','In practice ↗','Demo 1','Demo 2']);assert.equal(await page.locator('#demo-one-style option').count(),6);assert.equal(await page.locator('#demo-two-style option').count(),3);
