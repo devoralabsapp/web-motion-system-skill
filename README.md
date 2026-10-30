@@ -38,7 +38,7 @@ URL chia sẻ dùng hash: `/#view=lab&motion=073`, `/#view=practice`, `/#view=de
 
 ### Cache khi phát hành
 
-Build fingerprint toàn bộ entry JS/CSS và các dependency của Motion Explorer cùng Demo 1/Demo 2, rồi ghi URL theo nội dung vào HTML. HTML/alias chưa có hash được yêu cầu revalidate; thay đổi module con cũng làm đổi hash entry. `asset-manifest.json` ghi đường dẫn nguồn → asset đã hash.
+Build fingerprint toàn bộ entry JS/CSS và các dependency của Motion Explorer cùng Demo 1/Demo 2, rồi ghi URL theo nội dung vào HTML. Cấu hình Vercel yêu cầu HTML/alias chưa có hash revalidate; thay đổi module con cũng làm đổi hash entry. CDN đứng trước domain có thể ghi đè TTL (domain hiện đi qua Cloudflare và trả TTL 4 giờ cho JS/CSS); URL có hash giúp bản phát hành mới tránh dùng asset cũ ngay cả khi TTL này còn hiệu lực. `asset-manifest.json` ghi đường dẫn nguồn → asset đã hash.
 
 `npm run release:verify` tái hiện HTML mới với app cũ trong cache HTTP 4 giờ, rồi kiểm tra nâng cấp sang bản hash mà giữ nguyên cache và xác minh cả hai demo hiện ra. Trang đã mở trước khi deploy cần tải lại một lần để nhận entry HTML mới.
 
