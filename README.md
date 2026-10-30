@@ -6,8 +6,11 @@ Skill chính: [SKILL.md](skills/web-motion-system-skill/SKILL.md). Tài liệu k
 
 ## Motion Explorer web app
 
+**Live:** [motion.devoralabs.tech](https://motion.devoralabs.tech)
+
 **Every motion. All in one place.** Web app nằm trong cùng repo, dùng chung 240 renderer và bộ GIF của skill.
 
+- **24 kiểu chuyển động cho thẻ:** mỗi category có một choreography riêng cho 10 thẻ; vào màn hình, hover và phản hồi focus. [Xem bảng 24 kiểu và quy tắc replay](docs/card-motion.md).
 - **All motions:** đủ 240 mục / 24 nhóm, tìm ID/tên/tiếng Việt, lọc collection/category, lưu mục yêu thích trên trình duyệt.
 - **Motion Lab:** demo Canvas chạy trực tiếp, play/pause/replay, tua timeline, chỉnh tốc độ, GIF gốc, tải GIF và chép prompt cho agent.
 - **In practice:** giao diện thao tác được với reveal ổn định, SVG draw, pointer tilt, magnetic text, FLIP khi lọc/sắp xếp, checkbox draw, count-up, progress, tab, toggle và accordion. State giữ nguyên khi đổi màn hình.
@@ -38,6 +41,7 @@ Sau khi server local đã chạy, mở terminal khác:
 
 ```sh
 npm run explorer:verify
+npm run cards:verify
 ```
 
 Script Chrome/Playwright kiểm tra thay đổi khung hình của đủ 240 demo live, tìm kiếm/lưu mục, GIF, timeline, clipboard, state của workspace và reduced motion ở desktop/mobile. Có thể đặt `BASE_URL` để kiểm tra một deployment bạn quản lý. Báo cáo và ảnh QA lưu ngoài repo tại `../redline-delivery/motion-catalog/`.

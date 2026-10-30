@@ -13,7 +13,8 @@
     "catalog:verify-gallery": "node scripts/verify-gallery.mjs",
     "build": "node scripts/build-explorer.mjs",
     "dev": "node scripts/build-explorer.mjs && node scripts/preview-explorer.mjs",
-    "explorer:verify": "node scripts/verify-explorer.mjs"
+    "explorer:verify": "node scripts/verify-explorer.mjs",
+    "cards:verify": "node scripts/verify-card-motion.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
