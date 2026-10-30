@@ -27,20 +27,23 @@ export const cardProfiles = [
 ];
 
 export function createCardMotion({isReduced}) {
-  const states=new Map(),globalEvents=new AbortController();
-  let cardEvents=new AbortController(),frame=0,visible=false,destroyed=false;
-  const ease='cubic-bezier(.16,.75,.2,1)';
+  const states=new Map(),nearby=new Set(),globalEvents=new AbortController();
+  let cardEvents=new AbortController(),frame=0,pointerFrame=0,visible=false,destroyed=false;
+  const pointerUpdates=new Map();
+  const ease='cubic-bezier(.22,.61,.36,1)';
   function animate(state,node,keyframes,options={}) {
     if(!node||isReduced()||!visible||document.hidden)return;
-    const animation=node.animate(keyframes,{duration:760,easing:ease,fill:'none',...options});
+    const animation=node.animate(keyframes,{duration:880,easing:ease,fill:'backwards',...options});
     state.animations.add(animation);
-    animation.finished.then(()=>state.animations.delete(animation),()=>state.animations.delete(animation));
+    if(state.buildingEntry)state.entryAnimations.add(animation);
+    const release=()=>{state.animations.delete(animation);state.entryAnimations.delete(animation);if(!state.entryAnimations.size){delete state.anchor.dataset.entering;}};
+    animation.finished.then(release,release);
     return animation;
   }
   function settle(state) {
     for(const animation of state.animations)animation.cancel();
-    state.animations.clear();
-    state.canvas.style.transform='';
+    state.animations.clear();state.entryAnimations.clear();delete state.anchor.dataset.entering;
+    state.artwork.style.transform='';pointerUpdates.delete(state);
     state.spotlight.style.opacity='';
   }
   function accent(state,delay=0) {
@@ -63,15 +66,15 @@ export function createCardMotion({isReduced}) {
     for(const bar of state.bars)animate(state,bar,[{opacity:1,transform:'scaleY(1)'},{opacity:1,transform:'scaleY(0)'}],{duration:850,delay,easing:'cubic-bezier(.4,0,.2,1)'});
   }
   function enter(state) {
-    state.armed=false;
-    const delay=(state.index%3)*55,options={delay};
+    state.armed=false;state.buildingEntry=true;state.anchor.dataset.entering='true';
+    const delay=(state.index%3)*65,options={delay};
     const fade=[{opacity:0},{opacity:1}];
     const from=(transform)=>[{opacity:0,transform},{opacity:1,transform:'none'}];
     const card=state.surface,canvas=state.canvas,copy=state.copy;
     switch(state.group) {
-      case 1:animate(state,card,from('translateY(28px)'),options);break;
-      case 2:animate(state,card,from('translateX(-34px)'),options);break;
-      case 3:animate(state,card,from('translateX(34px)'),options);break;
+      case 1:animate(state,card,from('translateY(34px)'),options);break;
+      case 2:animate(state,card,from('translateX(-40px)'),options);break;
+      case 3:animate(state,card,from('translateX(40px)'),options);break;
       case 4:
         animate(state,card,fade,options);
         [...card.querySelectorAll('.card-word')].forEach((word,i)=>animate(state,word,from('translateY(16px)'),{duration:570,delay:delay+45+i*65}));
@@ -79,21 +82,21 @@ export function createCardMotion({isReduced}) {
       case 5:animate(state,card,[{clipPath:'inset(100% 0 0 0 round 12px)'},{clipPath:'inset(0% 0 0 0 round 12px)'}],options);break;
       case 6:
         animate(state,card,fade,options);
-        animate(state,canvas,[{transform:'scale(1.2) translateX(-14px)'},{transform:'none'}],{delay,duration:1000});break;
+        animate(state,canvas,[{transform:'scale(1.16) translateX(-12px)'},{transform:'none'}],{delay,duration:1000});break;
       case 7:animate(state,card,[{clipPath:'circle(0% at 50% 42%)'},{clipPath:'circle(85% at 50% 42%)'}],{duration:900,delay,easing:'cubic-bezier(.4,0,.2,1)'});break;
       case 8:animate(state,card,fade,options);outline(state,delay);break;
       case 9:
         animate(state,card,fade,options);
         animate(state,canvas,[{transform:'translateY(24px) scale(1.08)'},{transform:'none'}],{duration:920,delay});
         animate(state,copy,from('translateY(10px)'),{duration:650,delay:delay+90});break;
-      case 10:animate(state,card,[{opacity:0,transform:'scale(.82)',transformOrigin:'0% 100%'},{opacity:1,transform:'none',transformOrigin:'0% 100%'}],options);break;
+      case 10:animate(state,card,[{opacity:0,transform:'scale(.88)',transformOrigin:'0% 100%'},{opacity:1,transform:'none',transformOrigin:'0% 100%'}],options);break;
       case 11:animate(state,card,[{clipPath:'polygon(0 0,0 0,0 100%,0 100%)'},{clipPath:'polygon(0 0,65% 0,25% 100%,0 100%)',offset:.45},{clipPath:'polygon(0 0,100% 0,100% 100%,0 100%)'}],{duration:850,delay});break;
-      case 12:animate(state,card,[{opacity:0,transform:'scale(.95)'},{opacity:1,transform:'scale(.975,1.025)',offset:.5},{opacity:1,transform:'none'}],{...options,duration:620});break;
+      case 12:animate(state,card,[{opacity:0,transform:'scale(.95)'},{opacity:1,transform:'scale(.98,1.02)',offset:.5},{opacity:1,transform:'none'}],{...options,duration:620});break;
       case 13:animate(state,card,fade,options);shimmer(state,delay);break;
-      case 14:animate(state,card,[{opacity:0,transform:'translateY(30px)'},{opacity:1,transform:'translateY(-7px)',offset:.5},{transform:'translateY(3px)',offset:.72},{transform:'none'}],{duration:880,delay,easing:'ease-out'});break;
+      case 14:animate(state,card,[{opacity:0,transform:'translateY(34px)',easing:'cubic-bezier(.22,.7,.3,1)'},{opacity:1,transform:'translateY(-6px)',offset:.62,easing:'ease-in-out'},{opacity:1,transform:'translateY(1px)',offset:.84,easing:'ease-in-out'},{opacity:1,transform:'none'}],{duration:1000,delay,easing:'linear'});break;
       case 15:animate(state,card,fade,options);animate(state,canvas,[{transform:'perspective(600px) rotateX(12deg) rotateY(-10deg) scale(.95)'},{transform:'none'}],{duration:940,delay});break;
-      case 16:animate(state,card,from('perspective(800px) rotateY(-38deg)'),{duration:940,delay});break;
-      case 17:animate(state,card,[{opacity:0,transform:'perspective(800px) rotateX(-32deg) rotate(-2deg) scaleY(.9)',transformOrigin:'50% 0%'},{opacity:1,transform:'none',transformOrigin:'50% 0%'}],{duration:940,delay,easing:'cubic-bezier(.4,0,.2,1)'});break;
+      case 16:animate(state,card,from('perspective(800px) rotateY(-28deg)'),{duration:940,delay});break;
+      case 17:animate(state,card,[{opacity:0,transform:'perspective(800px) rotateX(-24deg) rotate(-2deg) scaleY(.9)',transformOrigin:'50% 0%'},{opacity:1,transform:'none',transformOrigin:'50% 0%'}],{duration:940,delay,easing:'cubic-bezier(.4,0,.2,1)'});break;
       case 18:animate(state,card,[{opacity:0,transform:'scale(.96)'},{opacity:1,transform:'none'}],options);particles(state,delay);break;
       case 19:animate(state,card,fade,options);animate(state,canvas,[{transform:'skewX(-7deg) scale(1.1)'},{transform:'skewX(3deg) scale(1.04)',offset:.55},{transform:'none'}],{duration:920,delay});break;
       case 20:animate(state,card,fade,options);framing(state,delay);animate(state,canvas,[{transform:'scale(1.12)'},{transform:'none'}],{duration:1000,delay});break;
@@ -101,18 +104,23 @@ export function createCardMotion({isReduced}) {
       case 22:animate(state,card,fade,options);animate(state,canvas,from('translateX(-35px)'),options);animate(state,copy,from('translateX(25px)'),{duration:720,delay:delay+100});break;
       case 23:animate(state,card,fade,options);animate(state,state.spotlight,[{opacity:0},{opacity:.75,offset:.4},{opacity:0}],{duration:900,delay});break;
       case 24:
-        animate(state,card,[{opacity:0,transform:'scale(.96)'},{opacity:1,transform:'none'}],{duration:480,delay});
+        animate(state,card,[{opacity:0,transform:'scale(.96)'},{opacity:1,transform:'none'}],{duration:650,delay});
         animate(state,canvas,from('translateY(18px)'),{duration:550,delay:delay+100});
         animate(state,copy.querySelector('.card-title-row'),from('translateY(12px)'),{duration:500,delay:delay+240});
-        animate(state,copy.querySelector('p'),fade,{duration:400,delay:delay+400});accent(state,delay+180);break;
+        animate(state,copy.querySelector('p'),fade,{duration:500,delay:delay+330});accent(state,delay+180);break;
     }
+    state.buildingEntry=false;
   }
+  const observer=new IntersectionObserver(entries=>{
+    for(const entry of entries){const state=states.get(entry.target);if(!state)continue;if(entry.isIntersecting)nearby.add(state);else{nearby.delete(state);if(!state.armed){settle(state);state.armed=true;}}}
+    refresh();
+  },{rootMargin:'96px 0px',threshold:0});
   function refresh() {
     if(destroyed||frame||!visible||isReduced()||document.hidden)return;
     frame=requestAnimationFrame(()=>{
       frame=0;
       if(!visible||isReduced()||document.hidden)return;
-      const measured=[...states.values()].map(state=>({state,rect:state.anchor.getBoundingClientRect()}));
+      const measured=[...nearby].map(state=>({state,rect:state.anchor.getBoundingClientRect()}));
       for(const {state,rect} of measured) {
         if(rect.bottom < -96||rect.top > innerHeight+96){if(!state.armed){settle(state);state.armed=true;}continue;}
         if(state.anchor.contains(document.activeElement)){settle(state);state.armed=false;continue;}
@@ -120,40 +128,46 @@ export function createCardMotion({isReduced}) {
       }
     });
   }
-  function settleAll() {cancelAnimationFrame(frame);frame=0;for(const state of states.values())settle(state);}
+  function settleAll() {cancelAnimationFrame(frame);cancelAnimationFrame(pointerFrame);frame=pointerFrame=0;pointerUpdates.clear();for(const state of states.values())settle(state);}
   function hover(state) {
-    settle(state);state.armed=false;
-    if(isReduced()||!visible)return;
+    if(isReduced()||!visible||state.anchor.contains(document.activeElement))return;
     state.bounds=state.anchor.getBoundingClientRect();
-    state.canvas.style.transform=cardProfiles[state.group-1].hover;
+    state.artwork.style.transform=cardProfiles[state.group-1].hover;
+    // Enter and hover have separate artwork planes. Never cancel an entrance
+    // just because the pointer crossed a card while the visitor was scrolling.
+    if(state.animations.size)return;
     if(state.group===8)outline(state);
     if(state.group===13)shimmer(state);
     if(state.group===18)particles(state);
     if(state.group===21||state.group===24)accent(state);
     if(state.group===23)state.spotlight.style.opacity='.65';
   }
+  function leave(state){state.artwork.style.transform='';state.spotlight.style.opacity='';state.bounds=null;pointerUpdates.delete(state);}
+  function queuePointer(state,x,y){
+    pointerUpdates.set(state,{x,y});if(pointerFrame)return;
+    pointerFrame=requestAnimationFrame(()=>{pointerFrame=0;if(isReduced()||!visible||document.hidden){pointerUpdates.clear();return;}for(const [item,point] of pointerUpdates){if(!item.bounds)continue;const {x,y}=point;if(item.group===15)item.artwork.style.transform='perspective(600px) rotateX('+((y-.5)*-12)+'deg) rotateY('+((x-.5)*15)+'deg) scale(1.04)';else{item.spotlight.style.setProperty('--spot-x',x*100+'%');item.spotlight.style.setProperty('--spot-y',y*100+'%');}}pointerUpdates.clear();});
+  }
   for(const event of ['scroll','resize'])addEventListener(event,refresh,{passive:true,signal:globalEvents.signal});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)settleAll();else refresh()},{signal:globalEvents.signal});
   return {
     register(anchor,e,index) {
-      const state={anchor,index,group:e.group,armed:true,animations:new Set(),surface:anchor.querySelector('.card-surface'),canvas:anchor.querySelector('canvas'),copy:anchor.querySelector('.card-copy'),line:anchor.querySelector('.card-accent'),frame:anchor.querySelector('.card-outline'),sweep:anchor.querySelector('.card-sweep'),particles:anchor.querySelector('.card-particles'),bars:anchor.querySelectorAll('.card-frame-bar'),spotlight:anchor.querySelector('.card-spotlight')};
-      states.set(anchor,state);const options={signal:cardEvents.signal};
+      const state={anchor,index,group:e.group,armed:true,animations:new Set(),entryAnimations:new Set(),buildingEntry:false,artwork:anchor.querySelector('.card-artwork'),surface:anchor.querySelector('.card-surface'),canvas:anchor.querySelector('canvas'),copy:anchor.querySelector('.card-copy'),line:anchor.querySelector('.card-accent'),frame:anchor.querySelector('.card-outline'),sweep:anchor.querySelector('.card-sweep'),particles:anchor.querySelector('.card-particles'),bars:anchor.querySelectorAll('.card-frame-bar'),spotlight:anchor.querySelector('.card-spotlight')};
+      states.set(anchor,state);observer.observe(anchor);const options={signal:cardEvents.signal};
       anchor.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')hover(state)},options);
-      anchor.addEventListener('pointerleave',()=>settle(state),options);
+      anchor.addEventListener('pointerleave',()=>leave(state),options);
       anchor.addEventListener('focusin',()=>{settle(state);state.armed=false;},options);
       anchor.addEventListener('pointerdown',()=>settle(state),options);
       anchor.addEventListener('pointermove',event=>{
         if(isReduced()||!visible||event.pointerType==='touch'||![15,23].includes(state.group)||!state.bounds)return;
         const x=(event.clientX-state.bounds.left)/state.bounds.width,y=(event.clientY-state.bounds.top)/state.bounds.height;
-        if(state.group===15)state.canvas.style.transform=`perspective(600px) rotateX(${(y-.5)*-12}deg) rotateY(${(x-.5)*15}deg) scale(1.04)`;
-        else {state.spotlight.style.setProperty('--spot-x',x*100+'%');state.spotlight.style.setProperty('--spot-y',y*100+'%');}
+        queuePointer(state,x,y);
       },options);
     },
     refresh,
-    clear(){settleAll();states.clear();cardEvents.abort();cardEvents=new AbortController();},
+    clear(){settleAll();observer.disconnect();states.clear();nearby.clear();cardEvents.abort();cardEvents=new AbortController();},
     setVisible(next){visible=Boolean(next);if(!visible)settleAll();else refresh();},
     preferenceChanged(){settleAll();if(!isReduced())refresh();},
-    destroy(){destroyed=true;settleAll();states.clear();cardEvents.abort();globalEvents.abort();}
+    destroy(){destroyed=true;settleAll();observer.disconnect();states.clear();nearby.clear();cardEvents.abort();globalEvents.abort();}
   };
 }
 

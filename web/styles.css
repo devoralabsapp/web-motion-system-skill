@@ -27,6 +27,9 @@ html[data-reduced=true]{scroll-behavior:auto}html[data-reduced=true] *,html[data
 .motion-card:hover .card-surface{border-color:#b6b1a7;box-shadow:0 10px 28px #21201c09}
 .motion-card:focus-within .card-surface{border-color:var(--red)}
 .preview canvas{transition:transform .28s var(--ease);transform-origin:50% 50%}
+.card-artwork{width:100%;height:100%;transform-origin:50% 50%;transition:transform .48s cubic-bezier(.22,.61,.36,1);backface-visibility:hidden}
+.card-artwork canvas{transition:none}
+.motion-card:focus-within .card-artwork{transform:none!important;transition:none}
 .card-word{display:inline-block}
 .group-title{flex-wrap:wrap;row-gap:6px}
 .group-motion-label{font-size:8px;color:#8b8478;background:#eeece5;border-radius:4px;padding:3px 7px;letter-spacing:.01em}
