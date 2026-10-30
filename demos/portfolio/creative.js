@@ -57,7 +57,7 @@ if(profile.bio)$('#about-copy').textContent=profile.bio;
 if(profile.email){const a=document.createElement('a');a.href='mailto:'+profile.email;a.textContent=profile.email;$('#contact-channels').append(a)}
 if(profile.zalo&&/^https:\/\/zalo\.me\//.test(profile.zalo)){const a=document.createElement('a');a.href=profile.zalo;a.textContent='Trao đổi qua Zalo ↗';$('#contact-channels').append(a)}
 const query=new URLSearchParams(location.search),initialTheme=themes[query.get('theme')]?query.get('theme'):themes[readSaved()]?readSaved():'frame-shift';
-const themeControl=document.createElement('label');themeControl.className='standalone-theme';themeControl.innerHTML='Chọn kiểu Web 2 <select id="theme-dropdown" aria-label="Chọn kiểu Web 2">'+Object.entries(themes).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')+'</select>';
+const themeControl=document.createElement('label');themeControl.className='standalone-theme';themeControl.innerHTML='Chọn kiểu Demo 2 <select id="theme-dropdown" aria-label="Chọn kiểu Demo 2">'+Object.entries(themes).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')+'</select>';
 $('.theme-bar>div').replaceWith(themeControl);$('#theme-dropdown').addEventListener('change',e=>setTheme(e.target.value));
 setTheme(initialTheme,{initial:true});selectProject(selected,false);renderDemo();syncMotion();
 motion=createCreativeMotion({getTheme:()=>theme,isReduced:reduced,isDialogOpen:()=>dialog.open});bootComplete=true;

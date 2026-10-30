@@ -14,7 +14,9 @@
     "build": "node scripts/build-explorer.mjs",
     "dev": "node scripts/build-explorer.mjs && node scripts/preview-explorer.mjs",
     "explorer:verify": "node scripts/verify-explorer.mjs",
-    "cards:verify": "node scripts/verify-card-motion.mjs"
+    "cards:verify": "node scripts/verify-card-motion.mjs",
+    "demos:verify": "node scripts/verify-portfolio-demos.mjs",
+    "demos:check": "npm --prefix demos/portfolio run check"
   },
   "devDependencies": {
     "playwright": "1.62.1"

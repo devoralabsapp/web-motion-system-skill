@@ -5,13 +5,13 @@ export const styles=[
  {id:'classic',label:'Bản gốc',title:'Portfolio DevoraLabs — Bản gốc',url:'classic.html'},
  {id:'one-line',label:'Một nét, thành hệ thống',title:'Portfolio DevoraLabs — Một nét, thành hệ thống',url:'one-line.html'},
  ...[{id:'kinetic',label:'Chữ động'},{id:'layers',label:'Xếp lớp'},{id:'blueprint',label:'Bản vẽ'},{id:'orbit',label:'Quỹ đạo'}].map(style=>({...style,title:'Portfolio DevoraLabs — '+style.label,url:'one-line.html',variant:style.id}))
- ,{id:'creative-lab',label:'Creative Lab · Web mới',title:'DevoraLabs — Creative Lab',url:'creative.html?v=process-motion-3'}
+ ,{id:'creative-lab',label:'Creative Lab · Demo 2',title:'DevoraLabs — Creative Lab',url:'creative.html?v=process-motion-3'}
 ];
 initI18n();
-const picker=document.createElement('select');picker.id='website-picker';picker.setAttribute('aria-label','Chọn kiểu Web 1');
+const picker=document.createElement('select');picker.id='website-picker';picker.setAttribute('aria-label','Chọn kiểu Demo 1');
 picker.innerHTML=styles.slice(0,6).map(s=>`<option value="${s.id}">${s.label}</option>`).join('');
 const groups=document.createElement('div');groups.className='website-groups';
-groups.innerHTML='<div class="website-group" data-web-group="1"><button class="web-activate" data-web="1" aria-pressed="false">Web 1 <small>6 kiểu cũ</small></button></div><div class="website-group" data-web-group="2"><button class="web-activate" data-web="2" aria-pressed="false">Web 2 <small>3 kiểu mới</small></button><select id="creative-picker" aria-label="Chọn kiểu Web 2"><option value="frame-shift">Điện ảnh · Frame Shift</option><option value="cobalt-court">Cobalt · Cobalt Court</option><option value="cutout-dept">Collage · Cutout Dept.</option></select></div>';
+groups.innerHTML='<div class="website-group" data-web-group="1"><button class="web-activate" data-web="1" aria-pressed="false">Demo 1 <small>6 kiểu cũ</small></button></div><div class="website-group" data-web-group="2"><button class="web-activate" data-web="2" aria-pressed="false">Demo 2 <small>3 kiểu mới</small></button><select id="creative-picker" aria-label="Chọn kiểu Demo 2"><option value="frame-shift">Điện ảnh · Frame Shift</option><option value="cobalt-court">Cobalt · Cobalt Court</option><option value="cutout-dept">Collage · Cutout Dept.</option></select></div>';
 groups.querySelector('[data-web-group="1"]').append(picker);
 document.querySelector('.style-picker').append(groups);document.querySelector('.style-tabs').hidden=true;
 document.getElementById('style-label').hidden=true;

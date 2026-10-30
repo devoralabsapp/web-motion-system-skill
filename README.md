@@ -13,6 +13,7 @@ Skill chính: [SKILL.md](skills/web-motion-system-skill/SKILL.md). Tài liệu k
 - **24 kiểu chuyển động cho thẻ:** mỗi category có một choreography riêng cho 10 thẻ; vào màn hình, hover và phản hồi focus. [Xem bảng 24 kiểu và quy tắc replay](docs/card-motion.md).
 - **All motions:** đủ 240 mục / 24 nhóm, tìm ID/tên/tiếng Việt, lọc collection/category, lưu mục yêu thích trên trình duyệt.
 - **Motion Lab:** demo Canvas chạy trực tiếp, play/pause/replay, tua timeline, chỉnh tốc độ, GIF gốc, tải GIF và chép prompt cho agent.
+- **Demo 1 / Demo 2:** Web 1 và Web 2 trước đây đã gộp từ repo `redline-personal`, gồm dropdown 6 kiểu Portfolio + 3 kiểu Creative Lab, VI/EN và giữ dữ liệu demo khi đổi tab. [Thông tin di chuyển](docs/migrations/redline-personal/README.md).
 - **In practice:** giao diện thao tác được với reveal ổn định, SVG draw, pointer tilt, magnetic text, FLIP khi lọc/sắp xếp, checkbox draw, count-up, progress, tab, toggle và accordion. State giữ nguyên khi đổi màn hình.
 - Chỉ chạy tối đa 6 preview trong viewport; ngừng khi tab bị ẩn. Reduced motion tắt autoplay và hiệu ứng trang; người dùng vẫn có thể chủ động phát riêng một demo. Có thông báo khi thiết bị yêu cầu giảm chuyển động.
 - Demo 3D/shader là mô phỏng Canvas 2D; input/audio/data minh họa được ghi rõ. Đây không phải thư viện renderer 3D sản xuất.
@@ -33,7 +34,7 @@ Mở địa chỉ Local được in ra (mặc định cổng 4190). Build tĩnh 
 3. **Build Command:** `npm run build`; **Output Directory:** `dist`; **Install Command:** `npm ci`. Dùng Node.js 24.x.
 4. Deploy. File `vercel.json` đã khai báo build/output và các header cho static app. Các lần push tiếp theo có thể deploy qua Git integration của Vercel.
 
-URL chia sẻ dùng hash: `/#view=lab&motion=073`, `/#view=practice`, `/#view=all&category=18`. Repo vẫn private; app build chỉ công bố thư viện demo và các recipe ngắn, không chép toàn bộ snapshot mã của Web 1/Web 2 vào output.
+URL chia sẻ dùng hash: `/#view=lab&motion=073`, `/#view=practice`, `/#view=demo1`, `/#view=demo2`, `/#view=all&category=18`. Repo vẫn private; app build chỉ công bố thư viện demo và các recipe ngắn, không chép toàn bộ snapshot mã của Web 1/Web 2 vào output.
 
 ### Kiểm tra app
 
@@ -42,6 +43,7 @@ Sau khi server local đã chạy, mở terminal khác:
 ```sh
 npm run explorer:verify
 npm run cards:verify
+npm run demos:verify
 ```
 
 Script Chrome/Playwright kiểm tra thay đổi khung hình của đủ 240 demo live, tìm kiếm/lưu mục, GIF, timeline, clipboard, state của workspace và reduced motion ở desktop/mobile. Có thể đặt `BASE_URL` để kiểm tra một deployment bạn quản lý. Báo cáo và ảnh QA lưu ngoài repo tại `../redline-delivery/motion-catalog/`.

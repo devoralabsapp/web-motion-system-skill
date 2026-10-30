@@ -1,0 +1,243 @@
+{
+  "exportedAt": "2026-10-30T02:44:30.150Z",
+  "repository": {
+    "id": 1438055268,
+    "node_id": "R_kgDOVbb7ZA",
+    "name": "redline-personal",
+    "full_name": "devoralabsapp/redline-personal",
+    "private": true,
+    "owner": {
+      "login": "devoralabsapp",
+      "id": 339309483,
+      "node_id": "U_kgDOFDlzqw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/339309483?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/devoralabsapp",
+      "html_url": "https://github.com/devoralabsapp",
+      "followers_url": "https://api.github.com/users/devoralabsapp/followers",
+      "following_url": "https://api.github.com/users/devoralabsapp/following{/other_user}",
+      "gists_url": "https://api.github.com/users/devoralabsapp/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/devoralabsapp/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/devoralabsapp/subscriptions",
+      "organizations_url": "https://api.github.com/users/devoralabsapp/orgs",
+      "repos_url": "https://api.github.com/users/devoralabsapp/repos",
+      "events_url": "https://api.github.com/users/devoralabsapp/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/devoralabsapp/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "html_url": "https://github.com/devoralabsapp/redline-personal",
+    "description": "Vietnamese personal web app portfolio with Redline Atelier and original SVG motion studies",
+    "fork": false,
+    "url": "https://api.github.com/repos/devoralabsapp/redline-personal",
+    "forks_url": "https://api.github.com/repos/devoralabsapp/redline-personal/forks",
+    "keys_url": "https://api.github.com/repos/devoralabsapp/redline-personal/keys{/key_id}",
+    "collaborators_url": "https://api.github.com/repos/devoralabsapp/redline-personal/collaborators{/collaborator}",
+    "teams_url": "https://api.github.com/repos/devoralabsapp/redline-personal/teams",
+    "hooks_url": "https://api.github.com/repos/devoralabsapp/redline-personal/hooks",
+    "issue_events_url": "https://api.github.com/repos/devoralabsapp/redline-personal/issues/events{/number}",
+    "events_url": "https://api.github.com/repos/devoralabsapp/redline-personal/events",
+    "assignees_url": "https://api.github.com/repos/devoralabsapp/redline-personal/assignees{/user}",
+    "branches_url": "https://api.github.com/repos/devoralabsapp/redline-personal/branches{/branch}",
+    "tags_url": "https://api.github.com/repos/devoralabsapp/redline-personal/tags",
+    "blobs_url": "https://api.github.com/repos/devoralabsapp/redline-personal/git/blobs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/devoralabsapp/redline-personal/git/tags{/sha}",
+    "git_refs_url": "https://api.github.com/repos/devoralabsapp/redline-personal/git/refs{/sha}",
+    "trees_url": "https://api.github.com/repos/devoralabsapp/redline-personal/git/trees{/sha}",
+    "statuses_url": "https://api.github.com/repos/devoralabsapp/redline-personal/statuses/{sha}",
+    "languages_url": "https://api.github.com/repos/devoralabsapp/redline-personal/languages",
+    "stargazers_url": "https://api.github.com/repos/devoralabsapp/redline-personal/stargazers",
+    "contributors_url": "https://api.github.com/repos/devoralabsapp/redline-personal/contributors",
+    "subscribers_url": "https://api.github.com/repos/devoralabsapp/redline-personal/subscribers",
+    "subscription_url": "https://api.github.com/repos/devoralabsapp/redline-personal/subscription",
+    "commits_url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits{/sha}",
+    "git_commits_url": "https://api.github.com/repos/devoralabsapp/redline-personal/git/commits{/sha}",
+    "comments_url": "https://api.github.com/repos/devoralabsapp/redline-personal/comments{/number}",
+    "issue_comment_url": "https://api.github.com/repos/devoralabsapp/redline-personal/issues/comments{/number}",
+    "contents_url": "https://api.github.com/repos/devoralabsapp/redline-personal/contents/{+path}",
+    "compare_url": "https://api.github.com/repos/devoralabsapp/redline-personal/compare/{base}...{head}",
+    "merges_url": "https://api.github.com/repos/devoralabsapp/redline-personal/merges",
+    "archive_url": "https://api.github.com/repos/devoralabsapp/redline-personal/{archive_format}{/ref}",
+    "downloads_url": "https://api.github.com/repos/devoralabsapp/redline-personal/downloads",
+    "issues_url": "https://api.github.com/repos/devoralabsapp/redline-personal/issues{/number}",
+    "pulls_url": "https://api.github.com/repos/devoralabsapp/redline-personal/pulls{/number}",
+    "milestones_url": "https://api.github.com/repos/devoralabsapp/redline-personal/milestones{/number}",
+    "notifications_url": "https://api.github.com/repos/devoralabsapp/redline-personal/notifications{?since,all,participating}",
+    "labels_url": "https://api.github.com/repos/devoralabsapp/redline-personal/labels{/name}",
+    "releases_url": "https://api.github.com/repos/devoralabsapp/redline-personal/releases{/id}",
+    "deployments_url": "https://api.github.com/repos/devoralabsapp/redline-personal/deployments",
+    "created_at": "2026-10-29T06:51:13Z",
+    "updated_at": "2026-10-29T15:59:22Z",
+    "pushed_at": "2026-10-29T15:59:18Z",
+    "git_url": "git://github.com/devoralabsapp/redline-personal.git",
+    "ssh_url": "git@github.com:devoralabsapp/redline-personal.git",
+    "clone_url": "https://github.com/devoralabsapp/redline-personal.git",
+    "svn_url": "https://github.com/devoralabsapp/redline-personal",
+    "homepage": "https://redline-personal.vercel.app",
+    "size": 1258,
+    "stargazers_count": 1,
+    "watchers_count": 1,
+    "language": "JavaScript",
+    "has_issues": true,
+    "has_projects": true,
+    "has_downloads": false,
+    "has_wiki": false,
+    "has_pages": false,
+    "has_discussions": false,
+    "forks_count": 0,
+    "mirror_url": null,
+    "archived": false,
+    "disabled": false,
+    "open_issues_count": 0,
+    "license": null,
+    "allow_forking": true,
+    "is_template": false,
+    "web_commit_signoff_required": false,
+    "has_pull_requests": true,
+    "pull_request_creation_policy": "all",
+    "topics": [],
+    "visibility": "private",
+    "forks": 0,
+    "open_issues": 0,
+    "watchers": 1,
+    "default_branch": "main",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "temp_clone_token": "CQ4XHK3DKR526QYZ26TOGQTK4QC2Y",
+    "allow_squash_merge": true,
+    "allow_merge_commit": true,
+    "allow_rebase_merge": true,
+    "allow_auto_merge": false,
+    "delete_branch_on_merge": false,
+    "allow_update_branch": false,
+    "use_squash_pr_title_as_default": false,
+    "squash_merge_commit_message": "COMMIT_MESSAGES",
+    "squash_merge_commit_title": "COMMIT_OR_PR_TITLE",
+    "merge_commit_message": "PR_TITLE",
+    "merge_commit_title": "MERGE_MESSAGE",
+    "network_count": 0,
+    "subscribers_count": 0
+  },
+  "branches": [
+    {
+      "name": "devoralabs-replay-fix",
+      "commit": {
+        "sha": "3c1d575ea1c863a8de7755042897ac5e3a08e51a",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/3c1d575ea1c863a8de7755042897ac5e3a08e51a"
+      },
+      "protected": false
+    },
+    {
+      "name": "fix-process-reveal-loop",
+      "commit": {
+        "sha": "333b67407654c9808a0a5af6d154771b79f62a5d",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/333b67407654c9808a0a5af6d154771b79f62a5d"
+      },
+      "protected": false
+    },
+    {
+      "name": "languages-and-motion-tabs",
+      "commit": {
+        "sha": "0790a590763715166dd3e517ea07be680eefdb66",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/0790a590763715166dd3e517ea07be680eefdb66"
+      },
+      "protected": false
+    },
+    {
+      "name": "main",
+      "commit": {
+        "sha": "fde1ebe1d09ed2e5cf29cfa6574713133dbcfb30",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/fde1ebe1d09ed2e5cf29cfa6574713133dbcfb30"
+      },
+      "protected": false
+    },
+    {
+      "name": "motion-notice-session-fix",
+      "commit": {
+        "sha": "722cc760f9f35082246607b2084f1c66883a417a",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/722cc760f9f35082246607b2084f1c66883a417a"
+      },
+      "protected": false
+    },
+    {
+      "name": "motion-one-line",
+      "commit": {
+        "sha": "835cb585cf0c511d9b13ec27123dad61dfffbf17",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/835cb585cf0c511d9b13ec27123dad61dfffbf17"
+      },
+      "protected": false
+    },
+    {
+      "name": "motion-preference-notice",
+      "commit": {
+        "sha": "162ee0a748385ab8b09a74057d6b06b468c2a138",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/162ee0a748385ab8b09a74057d6b06b468c2a138"
+      },
+      "protected": false
+    },
+    {
+      "name": "restore-process-motion-cache-safe",
+      "commit": {
+        "sha": "3166d9aca7ed5c6de337ee2f52f8f432f0d3b639",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/3166d9aca7ed5c6de337ee2f52f8f432f0d3b639"
+      },
+      "protected": false
+    },
+    {
+      "name": "smooth-full-page",
+      "commit": {
+        "sha": "ffe80d97bf2b3cd1dfe6f080cf969421bdf56aab",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/ffe80d97bf2b3cd1dfe6f080cf969421bdf56aab"
+      },
+      "protected": false
+    },
+    {
+      "name": "stabilize-web2-process",
+      "commit": {
+        "sha": "7685af3384c46c9f8fc0598fb6ea910bb227a3ab",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/7685af3384c46c9f8fc0598fb6ea910bb227a3ab"
+      },
+      "protected": false
+    },
+    {
+      "name": "studio-three-directions",
+      "commit": {
+        "sha": "e687d351bdf9f64862f42bc52d173a88bc471a01",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/e687d351bdf9f64862f42bc52d173a88bc471a01"
+      },
+      "protected": false
+    }
+  ],
+  "tags": [
+    {
+      "name": "v1.1-current",
+      "zipball_url": "https://api.github.com/repos/devoralabsapp/redline-personal/zipball/refs/tags/v1.1-current",
+      "tarball_url": "https://api.github.com/repos/devoralabsapp/redline-personal/tarball/refs/tags/v1.1-current",
+      "commit": {
+        "sha": "ccb257e0f04afb133c3966c5b91d30ec05e5d5cc",
+        "url": "https://api.github.com/repos/devoralabsapp/redline-personal/commits/ccb257e0f04afb133c3966c5b91d30ec05e5d5cc"
+      },
+      "node_id": "REF_kwDOVbb7ZLZyZWZzL3RhZ3MvdjEuMS1jdXJyZW50"
+    }
+  ],
+  "releases": [],
+  "issues": [],
+  "pullNumbers": [
+    10,
+    9,
+    8,
+    7,
+    6,
+    5,
+    4,
+    3,
+    2,
+    1
+  ]
+}
