@@ -1,0 +1,74 @@
+# DevoraLabs — Từ quy trình đến sản phẩm
+
+Portfolio song ngữ Việt/Anh, art direction Redline Atelier. Phiên bản 1.6 dùng thương hiệu DevoraLabs, logo D + L và sáu tab riêng trên cùng một website. Chưa kết nối dịch vụ nhận brief; danh tính và dự án thật vẫn chờ bổ sung.
+
+Bản gốc 1.1 được giữ trong `classic.html` và `classic/`, đồng thời còn snapshot tag `v1.1-current`. Bản “Một nét, thành hệ thống” ở `one-line.html`. Website chung: https://redline-personal.vercel.app. Đây là cập nhật theo yêu cầu gom và deploy chung sau khi đã bàn giao preview 1.2.
+
+## Chuyển kiểu
+
+`index.html`, `switcher.css`, `switcher.js` tạo thanh chọn và sáu vùng xem. Mặc định từ bản 1.4 là Một nét. `?style=classic` và `?style=one-line` mở đúng kiểu; lựa chọn mới được nhớ bằng khóa `redline-preferred-style-v2` nếu localStorage khả dụng. Khóa phiên bản cũ không áp đặt Bản gốc lên mặc định mới. Có thể dùng Tab, Enter, phím trái/phải, Home/End và browser Back/Forward.
+
+Mỗi kiểu chỉ tải khi mở lần đầu, sau đó giữ nguyên trang trong phiên: vị trí cuộn, bộ lọc, dữ liệu demo, form và dialog không reset khi chuyển kiểu. Các kiểu giữ dữ liệu độc lập để thử/so sánh; reload vẫn trả về dữ liệu demo mẫu như trước. Nội dung, dữ liệu mẫu, font, ảnh và CSS nền dùng chung. Chỉ app/motion của Bản gốc được giữ riêng để bảo toàn choreography.
+
+## Xem website
+
+**Cách nhanh:** mở `preview.html` bằng Chrome hoặc Edge. Giữ hai file `preview-classic.html`, `preview-one-line.html` và thư mục `assets/` bên cạnh. Các bản này gộp CSS/JavaScript để chạy trực tiếp; cũng có thể mở riêng từng preview. Sao chép có phương án chọn văn bản nếu trình duyệt hạn chế clipboard.
+
+**Để chỉnh sửa:** tại thư mục này chạy `npm run dev`, rồi mở http://127.0.0.1:4173. Không cần cài dependency. Dùng Node.js 18 trở lên. Dừng máy chủ bằng Ctrl+C. Cổng đang dùng: 4173.
+
+`index.html` là trang chọn; `classic.html` và `one-line.html` là hai trang portfolio. `content.js`, `demo-state.js` dùng chung. `app.js`, `effects.js`, `story.js`, `story-math.js`, `project-motion.js`, `story.css` phục vụ Một nét; `page-motion.js` và `page-motion.css` điều phối các section phía dưới. `classic/app.js`, `classic/effects.js` giữ bản gốc. `npm run build` kiểm tra cú pháp, 11 kiểm thử dữ liệu/hình học/bản dịch và tạo cả ba preview cùng thư mục tĩnh `dist/`.
+
+## Chỉnh nội dung
+
+- `content.js` → `profile`: điền `name`, `brand` (nếu có), `bio`, `email`, `zalo` (URL https://zalo.me/...), `siteUrl` (URL https đầy đủ). `null` nghĩa là chưa có thông tin. Tên tạm hiện tại là “Tên của bạn”.
+- `projects`: hồ sơ minh họa có bối cảnh, vai trò ở concept, giải pháp, luồng và giới hạn. Chỉ đổi nhãn thành dự án thật khi có bằng chứng và được phép công khai. Thay ảnh bằng ảnh thật tương ứng.
+- `services`: nội dung ba nhóm giải pháp và thông tin khách cần chuẩn bị.
+- `classic.html`, `one-line.html`: headline, mô tả, quy trình, form và nội dung từng trang; `index.html` là phần chọn kiểu. Sửa title/description/og:title/og:description cùng thương hiệu trước khi công bố. Khi có domain, bổ sung canonical và metadata ảnh chia sẻ tuyệt đối.
+- `assets/theme-tokens.css`: selector token Redline Atelier trích nguyên từ nguồn chuẩn. `style.css` ánh xạ sang vai trò của website; `components.css` chứa các section và responsive; `motion.css` chứa phần chuyển tiếp tác vụ thành tab.
+
+Thêm email/Zalo chỉ tạo kênh liên hệ trực tiếp. Form vẫn tạo brief cục bộ. Muốn gửi form thật cần xác định nơi nhận, triển khai endpoint, chống lạm dụng và xử lý đủ trạng thái gửi/thành công/thất bại. Không đổi dòng thông báo thành “đã gửi” nếu chưa chuyển dữ liệu.
+
+## Chưa có và cần bổ sung
+
+Tên cá nhân, tiểu sử xác thực, email/Zalo, dự án thật được phép công khai, ảnh cá nhân (nếu muốn dùng), domain và cấu hình nhận brief. Không có số năm, khách hàng, đánh giá, giá, thời hạn hay thành tích tự tạo.
+
+## Demo
+
+- Đơn hàng: lọc, chuyển trạng thái, thống kê từ một nguồn dữ liệu, trạng thái rỗng.
+- Bán hàng: thêm/xóa, tăng/giảm số lượng, tổng tiền theo sản phẩm, giới hạn 99 đơn vị mỗi sản phẩm.
+- Nội bộ: duyệt yêu cầu, cập nhật số đang chờ/đã duyệt, trạng thái rỗng.
+- Mỗi chế độ giữ state và bộ lọc riêng trong phiên đang mở; reload trả về dữ liệu mẫu. Nút đặt lại chỉ ảnh hưởng chế độ hiện tại.
+- Các concept dùng ảnh chụp từ chính ứng dụng này, không dùng dashboard giả.
+- Brief chỉ ở trong bộ nhớ trang và clipboard khi người xem chọn sao chép; không tự gửi dữ liệu hoặc lưu nội dung form vào storage.
+
+## Nguồn và giấy phép
+
+Theme: https://github.com/devoralabsapp/creative-theme-system-skill tại commit `57f1273dee11dc27197fac09cc3933478fde0b1a`. Đã đối chiếu bản cài 28 theme với repository 50 theme. Đọc `DESIGN.md` để xem lý do thiết kế và storyboard.
+
+Font được đóng gói từ Google Fonts: Be Vietnam Pro Regular/SemiBold và IBM Plex Mono Regular. Giấy phép SIL OFL trong `assets/OFL-*.txt`. Đồ họa kiến trúc và hình sản phẩm SVG được vẽ riêng cho website; sản phẩm, giá và dữ liệu demo đều hư cấu.
+
+Đọc `MOTION-FULL-PAGE.md` cho bản 1.4; `QA-SWITCHER.md` lưu bản 1.3; `MOTION-ONE-LINE.md` và `QA-ONE-LINE.md` lưu bản 1.2. `QA.md`, `MOTION.md` và ảnh trong `screenshots/` lưu lịch sử bản 1.1. Video cuộn toàn trang bản 1.4 nằm ở thư mục bàn giao cục bộ `../redline-delivery/full-motion/`.
+
+## Vercel và mã nguồn private
+
+`vercel.json` build bằng `npm run build`, phục vụ duy nhất `dist/`; tài liệu, kiểm thử, ảnh QA và máy chủ phát triển không được đưa vào website công khai. Git integration dùng nhánh `main`. Không cần biến môi trường hoặc token trong mã nguồn. Repo GitHub được yêu cầu để private; quyền truy cập website tuân theo cấu hình của project Vercel.
+
+Trang hiện để `noindex, follow` vì còn thông tin danh tính chưa bổ sung. Khi hoàn thiện nội dung, bỏ meta robots này và cập nhật domain/metadata. URL triển khai được gắn ở phần About của repo GitHub sau khi xác minh; báo cáo `DEPLOYMENT.md` lưu trong bản bàn giao cục bộ.
+
+## Việt / Anh và sáu style (1.5)
+
+Bộ chọn có sáu tab riêng: Bản gốc (classic), Một nét (one-line), Chữ động (kinetic), Xếp lớp (layers), Bản vẽ (blueprint), Quỹ đạo (orbit). Ví dụ: ?style=blueprint&lang=en. Mặc định vẫn là Một nét; VI/EN dùng chung cho tất cả tab và được nhớ bằng redline-language. Trên điện thoại, vuốt thanh tab để xem đủ sáu kiểu.
+
+Bốn profile mới dùng chung ứng dụng trong one-line.html?variant=<id>, artwork và choreography định nghĩa trong motion-profiles.js/CSS. translations.js chứa catalog dịch; i18n-text.js giữ ID/số lượng của nhãn động; i18n.js dịch nội dung/metadata/aria/placeholder và tạo brief. Thêm nội dung mới cần thêm bản dịch tương ứng.
+
+Đổi ngôn ngữ không tải lại frame, không xóa state demo, form hoặc nội dung người dùng nhập. Brief đang sửa giữ nguyên, tạo lại sẽ dùng ngôn ngữ hiện tại. Currency luôn là VND. Ảnh project tiếng Anh chụp từ chính ứng dụng.
+
+Section rearm sau khi hoàn toàn ra khỏi viewport; input đang focus được bảo vệ. Hero phát lại khi cuộn ngược có chủ đích, dữ liệu vẫn giữ. Đọc LANGUAGES-AND-STYLES.md và video/JSON trong ../redline-delivery/six-styles/. Các phần ghi theo 1.2–1.4 ở trên là lịch sử triển khai.
+
+## DevoraLabs và phát lại khi cuộn (1.6)
+
+Logo D + L có trong đầu trang, chân trang, thanh chọn kiểu và favicon. Bản SVG độc lập: `assets/devoralabs-mark.svg`. Thương hiệu được khai báo ở `content.js`; các title và metadata đã cập nhật cho VI/EN.
+
+Sau khi tương tác, hero mở khóa khi người xem cuộn ngược ít nhất 48px và trở lại phần chuyển cảnh; không cần về đầu trang hoặc cuộn trong một khoảng thời gian giới hạn. Mỗi section tự đối chiếu vị trí trong khung hình khi cuộn và khi quay lại tab. Phát lại chỉ đổi phần trình bày: không render lại demo, không đổi chế độ đang chọn, không đặt lại đơn hàng, giỏ hàng, yêu cầu, bộ lọc hay form. Chế độ giảm chuyển động vẫn được tôn trọng.
+
+Kiểm thử trình duyệt: chạy `npm install`, mở server bằng `npm run dev`, rồi ở terminal khác chạy `npm run test:browser` với Chrome đã cài. Có thể đặt `BROWSER_EXECUTABLE` trỏ tới Chrome hoặc `PLAYWRIGHT_MODULE` trỏ tới Playwright sẵn có. `BASE_URL` mặc định là localhost:4173; đặt URL website để kiểm tra bản live. Bộ kiểm thử dùng sự kiện wheel và PageUp/PageDown thật, kiểm tra đường SVG/transform, animation CSS chạy lại ba lần, trạng thái thao tác, VI/EN, màn hình hẹp và giảm chuyển động. Kết quả và ảnh lưu tại `../redline-delivery/devoralabs/` hoặc `QA_OUTPUT`.

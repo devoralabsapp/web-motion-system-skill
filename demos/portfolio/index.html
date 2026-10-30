@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="vi">
+<head>
+ <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>DevoraLabs — Chọn cách trải nghiệm</title>
+ <meta name="description" content="DevoraLabs — Web 1 với dropdown 6 kiểu cũ; Web 2 với dropdown Điện ảnh, Cobalt và Collage.">
+ <meta name="robots" content="noindex, follow"><meta name="theme-color" content="#FAFAF7">
+ <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+ <link rel="stylesheet" href="switcher.css"><script type="module" src="switcher.js"></script>
+</head>
+<body>
+ <header class="style-toolbar">
+  <div class="style-brand"><span aria-hidden="true"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M9 7h8c8 0 13 4.5 13 11s-5 11-13 11H9V7Z M15 13v10h8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><div>DevoraLabs<small>PORTFOLIO / CREATIVE LAB</small></div></div>
+  <div class="style-picker"><span class="picker-label" id="style-label">CHỌN KIỂU</span><div class="style-tabs" role="tablist" aria-labelledby="style-label">
+   <button id="style-classic" role="tab" aria-selected="false" aria-controls="panel-classic" tabindex="-1" data-style="classic"><span>01</span> Bản gốc</button>
+   <button id="style-one-line" role="tab" aria-selected="true" aria-controls="panel-one-line" data-style="one-line"><span>02</span> Một nét</button>
+
+   <button id="style-kinetic" role="tab" aria-selected="false" aria-controls="panel-kinetic" tabindex="-1" data-style="kinetic"><span>03</span> Chữ động</button>
+   <button id="style-layers" role="tab" aria-selected="false" aria-controls="panel-layers" tabindex="-1" data-style="layers"><span>04</span> Xếp lớp</button>
+   <button id="style-blueprint" role="tab" aria-selected="false" aria-controls="panel-blueprint" tabindex="-1" data-style="blueprint"><span>05</span> Bản vẽ</button>
+   <button id="style-orbit" role="tab" aria-selected="false" aria-controls="panel-orbit" tabindex="-1" data-style="orbit"><span>06</span> Quỹ đạo</button>
+  </div></div>
+  <div class="language-picker" role="group" aria-label="Ngôn ngữ"><button type="button" data-language="vi" aria-label="Tiếng Việt" aria-pressed="true">VI</button><button type="button" data-language="en" aria-label="English" aria-pressed="false">EN</button></div><p class="style-note">Chuyển kiểu, tiếp tục trải nghiệm.<span aria-hidden="true">↙</span></p>
+ </header>
+ <main class="style-views" aria-label="Website thương hiệu cá nhân">
+  <section class="style-panel is-inactive" id="panel-classic" role="tabpanel" aria-labelledby="style-classic" aria-hidden="true" inert><p class="view-loading" role="status">Đang mở bản gốc…</p></section>
+  <section class="style-panel" id="panel-one-line" role="tabpanel" aria-labelledby="style-one-line"><p class="view-loading" role="status">Đang mở Một nét…</p></section>
+  <section class="style-panel is-inactive" id="panel-kinetic" role="tabpanel" aria-labelledby="style-kinetic" aria-hidden="true" inert><p class="view-loading" role="status">Đang mở…</p></section>
+  <section class="style-panel is-inactive" id="panel-layers" role="tabpanel" aria-labelledby="style-layers" aria-hidden="true" inert><p class="view-loading" role="status">Đang mở…</p></section>
+  <section class="style-panel is-inactive" id="panel-blueprint" role="tabpanel" aria-labelledby="style-blueprint" aria-hidden="true" inert><p class="view-loading" role="status">Đang mở…</p></section>
+  <section class="style-panel is-inactive" id="panel-orbit" role="tabpanel" aria-labelledby="style-orbit" aria-hidden="true" inert><p class="view-loading" role="status">Đang mở…</p></section>
+ </main>
+ <p class="sr-only" id="style-status" role="status" aria-live="polite"></p>
+ <noscript><div class="no-script">Chọn phiên bản để xem: <a href="classic.html">Bản gốc</a> · <a href="one-line.html">Một nét, thành hệ thống</a> · <a href="one-line.html?variant=kinetic">Chữ động</a> · <a href="one-line.html?variant=layers">Xếp lớp</a> · <a href="one-line.html?variant=blueprint">Bản vẽ</a> · <a href="one-line.html?variant=orbit">Quỹ đạo</a></div></noscript>
+</body>
+</html>
