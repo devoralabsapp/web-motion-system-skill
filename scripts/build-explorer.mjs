@@ -3,6 +3,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
+import {fingerprintAssets} from './fingerprint-assets.mjs';
 import {effects} from '../skills/web-motion-system-skill/assets/catalog/registry.mjs';
 
 const repo=fileURLToPath(new URL('../',import.meta.url));
@@ -29,3 +30,4 @@ const demoOut=path.join(dist,'demos/portfolio');await cp(path.join(portfolio,'di
 for(const file of ['explorer-bridge.js','explorer-bridge.css'])await cp(path.join(portfolio,file),path.join(demoOut,file));
 for(const page of ['classic.html','one-line.html','creative.html']){const file=path.join(demoOut,page);let html=await readFile(file,'utf8');html=html.replace('</head>','<link rel="stylesheet" href="explorer-bridge.css"><script type="module" src="explorer-bridge.js"></script></head>');await writeFile(file,html);}
 console.log('Demo 1 (six styles) + Demo 2 (three directions) built under /demos/portfolio/.');
+await fingerprintAssets(dist);

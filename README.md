@@ -36,6 +36,12 @@ Mở địa chỉ Local được in ra (mặc định cổng 4190). Build tĩnh 
 
 URL chia sẻ dùng hash: `/#view=lab&motion=073`, `/#view=practice`, `/#view=demo1`, `/#view=demo2`, `/#view=all&category=18`. Repo vẫn private; app build chỉ công bố thư viện demo và các recipe ngắn, không chép toàn bộ snapshot mã của Web 1/Web 2 vào output.
 
+### Cache khi phát hành
+
+Build fingerprint toàn bộ entry JS/CSS và các dependency của Motion Explorer cùng Demo 1/Demo 2, rồi ghi URL theo nội dung vào HTML. HTML/alias chưa có hash được yêu cầu revalidate; thay đổi module con cũng làm đổi hash entry. `asset-manifest.json` ghi đường dẫn nguồn → asset đã hash.
+
+`npm run release:verify` tái hiện HTML mới với app cũ trong cache HTTP 4 giờ, rồi kiểm tra nâng cấp sang bản hash mà giữ nguyên cache và xác minh cả hai demo hiện ra. Trang đã mở trước khi deploy cần tải lại một lần để nhận entry HTML mới.
+
 ### Kiểm tra app
 
 Sau khi server local đã chạy, mở terminal khác:

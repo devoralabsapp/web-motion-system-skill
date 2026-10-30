@@ -16,7 +16,8 @@
     "explorer:verify": "node scripts/verify-explorer.mjs",
     "cards:verify": "node scripts/verify-card-motion.mjs",
     "demos:verify": "node scripts/verify-portfolio-demos.mjs",
-    "demos:check": "npm --prefix demos/portfolio run check"
+    "demos:check": "npm --prefix demos/portfolio run check",
+    "release:verify": "node scripts/verify-release-cache.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
